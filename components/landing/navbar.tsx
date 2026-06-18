@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { Sparkles, ChevronDown, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const productLinks = [
   { label: "Features", href: "#features" },
@@ -101,20 +102,24 @@ export function Navbar() {
 
           {/* Desktop actions */}
           <div className="hidden items-center gap-2 lg:flex">
-            <Button
-              variant="ghost"
-              className="text-foreground/80 transition-shadow hover:shadow-sm"
-            >
-              Login
-            </Button>
+            <Link href="/login">
+              <Button
+                variant="ghost"
+                className="text-foreground/80 transition-shadow hover:shadow-sm"
+              >
+                Login
+              </Button>
+            </Link>
             <motion.div
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-                Get Started
-              </Button>
+              <Link href="/signup">
+                <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                  Get Started
+                </Button>
+              </Link>
             </motion.div>
           </div>
 
@@ -187,12 +192,16 @@ export function Navbar() {
                   </a>
                 ))}
                 <div className="flex flex-col gap-2 pt-3">
-                  <Button variant="outline" className="w-full bg-transparent">
-                    Login
-                  </Button>
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                    Get Started
-                  </Button>
+                  <Link href="/login" onClick={() => setMobileOpen(false)}>
+                    <Button variant="outline" className="w-full bg-transparent">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link href="/signup" onClick={() => setMobileOpen(false)}>
+                    <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                      Get Started
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </motion.div>

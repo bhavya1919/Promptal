@@ -3,6 +3,7 @@
 import { motion } from "motion/react"
 import { Sparkles, Play, ArrowRight, Users, Target, Briefcase } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const spring = { type: "spring", stiffness: 400, damping: 17 } as const
 
@@ -55,27 +56,31 @@ export function Hero() {
                 whileTap={{ scale: 0.97 }}
                 transition={spring}
               >
-                <Button
-                  size="lg"
-                  className="group bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  Get Started
-                  <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
+                <Link href="/signup">
+                  <Button
+                    size="lg"
+                    className="group bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    Get Started
+                    <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </Link>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.97 }}
                 transition={spring}
               >
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="group border-accent/40 bg-card text-primary transition-shadow hover:border-accent hover:shadow-[0_0_24px_-4px_var(--color-emerald)]"
-                >
-                  <Play className="mr-1 h-4 w-4 text-accent" />
-                  Watch Demo
-                </Button>
+                <Link href="#demo">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="group border-accent/40 bg-card text-primary transition-shadow hover:border-accent hover:shadow-[0_0_24px_-4px_var(--color-emerald)]"
+                  >
+                    <Play className="mr-1 h-4 w-4 text-accent" />
+                    Watch Demo
+                  </Button>
+                </Link>
               </motion.div>
             </motion.div>
 

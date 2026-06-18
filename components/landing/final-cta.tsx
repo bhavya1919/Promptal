@@ -4,6 +4,7 @@ import { motion } from "motion/react"
 import { ArrowRight, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Reveal } from "./reveal"
+import Link from "next/link"
 
 const spring = { type: "spring", stiffness: 400, damping: 17 } as const
 
@@ -29,27 +30,31 @@ export function FinalCta() {
                   whileTap={{ scale: 0.97 }}
                   transition={spring}
                 >
-                  <Button
-                    size="lg"
-                    className="group bg-accent text-accent-foreground hover:bg-accent/90"
-                  >
-                    Start Hiring
-                    <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
+                  <Link href="/signup">
+                    <Button
+                      size="lg"
+                      className="group bg-accent text-accent-foreground hover:bg-accent/90"
+                    >
+                      Start Hiring
+                      <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
                 </motion.div>
                 <motion.div
                   whileHover={{ scale: 1.04, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                   transition={spring}
                 >
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-white/30 bg-transparent text-primary-foreground hover:bg-white/10"
-                  >
-                    <Search className="mr-1 h-4 w-4" />
-                    Find Jobs
-                  </Button>
+                  <Link href="/jobs">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="border-white/30 bg-transparent text-primary-foreground hover:bg-white/10"
+                    >
+                      <Search className="mr-1 h-4 w-4" />
+                      Find Jobs
+                    </Button>
+                  </Link>
                 </motion.div>
               </div>
             </div>

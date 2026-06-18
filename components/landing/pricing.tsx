@@ -4,6 +4,7 @@ import { motion } from "motion/react"
 import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Reveal, RevealStagger, StaggerItem } from "./reveal"
+import Link from "next/link"
 
 const tiers = [
   {
@@ -143,15 +144,17 @@ export function Pricing() {
                   ))}
                 </ul>
 
-                <Button
-                  className={`mt-7 w-full ${
-                    tier.featured
-                      ? "bg-accent text-accent-foreground hover:bg-accent/90"
-                      : "bg-primary text-primary-foreground hover:bg-primary/90"
-                  }`}
-                >
-                  {tier.cta}
-                </Button>
+                <Link href="/signup" className="mt-7 w-full block">
+                  <Button
+                    className={`w-full ${
+                      tier.featured
+                        ? "bg-accent text-accent-foreground hover:bg-accent/90"
+                        : "bg-primary text-primary-foreground hover:bg-primary/90"
+                    }`}
+                  >
+                    {tier.cta}
+                  </Button>
+                </Link>
               </motion.div>
             </StaggerItem>
           ))}

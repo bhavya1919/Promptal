@@ -3,71 +3,149 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff, Building2, Loader2, Mail, Lock } from "lucide-react";
+import Link from "next/link";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const handleLogin = async () => {
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
 
-        if (error) {
-            alert(error.message);
-            return;
-        }
+            if (error) {
+                alert(error.message);
+                return;
+            }
 
-        const { data: userData } = await supabase
-            .from("users")
-            .select("*")
-            .eq("email", email)
-            .single();
+            const { data: userData } = await supabase
+                .from("users")
+                .select("*")
+                .eq("email", email)
+                .single();
 
-        if (!userData) {
-            alert("User not found");
-            return;
-        }
+            if (!userData) {
+                alert("User not found");
+                return;
+            }
 
-        if (userData.role === "candidate") {
-            router.push("/candidate/dashboard");
-        } else if (userData.role === "recruiter") {
-            router.push("/recruiter/dashboard");
+            if (userData.role === "candidate") {
+                router.push("/candidate/dashboard");
+            } else if (userData.role === "recruiter") {
+                router.push("/recruiter/dashboard");
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-100">
-            <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-                <h1 className="text-3xl font-bold mb-6 text-center">
-                    Promtal Login
-                </h1>
+        <div className="min-h-screen flex flex-col md:flex-row bg-slate-50">
+            {/* Left Side - Branding */}
+            <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-emerald-600 to-emerald-900 flex-col justify-center items-center text-white p-12">
+                <div className="max-w-md w-full space-y-8">
+                    <div className="flex items-center gap-3">
+                        <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-sm">
+                            <Building2 className="w-10 h-10 text-white" />
+                        </div>
+                        <span className="text-4xl font-bold tracking-tight">Promtal</span>
+                    </div>
+                    <div className="space-y-4">
+                        <h1 className="text-4xl font-bold leading-tight">
+                            Welcome back to your hiring journey.
+                        </h1>
+                        <p className="text-emerald-100 text-lg">
+                            Connect with top talent or find your next dream job. All in one place.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-                <div className="flex flex-col gap-4">
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        className="border p-3 rounded"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+            {/* Right Side - Login Form */}
+            <div className="flex-1 flex items-center justify-center p-8">
+                <div className="w-full max-w-md space-y-8">
+                    <div className="text-center md:text-left">
+                        <h2 className="text-3xl font-bold text-slate-900">Welcome Back</h2>
+                        <p className="text-slate-500 mt-2">Please sign in to your account</p>
+                    </div>
 
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        className="border p-3 rounded"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <form onSubmit={handleLogin} className="space-y-6">
+                        <div className="space-y-4">
+                            <div className="relative">
+                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                <input
+                                    type="email"
+                                    required
+                                    placeholder="Email address"
+                                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
 
-                    <button
-                        onClick={handleLogin}
-                        className="bg-blue-600 text-white p-3 rounded"
-                    >
-                        Login
-                    </button>
+                            <div className="relative">
+                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    required
+                                    placeholder="Password"
+                                    className="w-full pl-10 pr-12 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                                >
+                                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <label className="flex items-center">
+                                <input type="checkbox" className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
+                                <span className="ml-2 text-sm text-slate-600">Remember me</span>
+                            </label>
+                            <Link href="#" className="text-sm font-medium text-emerald-600 hover:text-emerald-500">
+                                Forgot password?
+                            </Link>
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full bg-emerald-600 text-white py-3 rounded-xl hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-500/20 font-medium transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                        >
+                            {loading ? (
+                                <>
+                                    <Loader2 className="h-5 w-5 animate-spin" />
+                                    Signing in...
+                                </>
+                            ) : (
+                                "Sign in"
+                            )}
+                        </button>
+                    </form>
+
+                    <p className="text-center text-sm text-slate-600">
+                        Don't have an account?{" "}
+                        <Link href="/signup" className="font-medium text-emerald-600 hover:text-emerald-500">
+                            Sign up here
+                        </Link>
+                    </p>
                 </div>
             </div>
         </div>
