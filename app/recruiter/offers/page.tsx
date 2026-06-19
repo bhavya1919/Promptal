@@ -86,7 +86,14 @@ function OffersPageContent() {
             return;
         }
 
+        // Update application status to Selected
+        await supabase
+            .from("applications")
+            .update({ recruiter_status: "Selected" })
+            .eq("id", applicationId);
+
         toast.success("Offer Letter Generated!");
+        fetchInterviewCandidates();
 
     };
 

@@ -5,6 +5,9 @@ import { supabase } from "@/lib/supabase";
 import DashboardLayout from "@/components/DashboardLayout";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
+import { generateOfferLetter } from "@/lib/generateofferletter";
+import { generateExperienceLetter } from "@/lib/generateExperienceLetter";
+import { generatePayslip } from "@/lib/generatePayslip";
 import { 
     Briefcase, 
     Users, 
@@ -28,6 +31,7 @@ import { SkeletonCard, SkeletonTable } from "@/components/ui/SkeletonCard";
 interface ApplicationData {
     id: string;
     candidate_name: string;
+    candidate_email: string;
     skills: string;
     job_title: string;
     requirements: string;
@@ -172,6 +176,12 @@ function RecruiterDashboardContent() {
                     .eq("id", app.candidate_id)
                     .single();
 
+                const { data: userData } = await supabase
+                    .from("users")
+                    .select("email")
+                    .eq("id", candidate?.user_id)
+                    .single();
+
                 const { data: job } = await supabase
                     .from("jobs")
                     .select("*")
@@ -194,6 +204,7 @@ function RecruiterDashboardContent() {
                 results.push({
                     id: app.id,
                     candidate_name: candidate?.candidate_name || "Unknown",
+                    candidate_email: userData?.email || "",
                     skills: candidate?.skills || "",
                     job_title: job?.title || "",
                     requirements: job?.requirements || "",
@@ -213,7 +224,8 @@ function RecruiterDashboardContent() {
 
     const shortlistCandidate = async (
         applicationId: string,
-        candidateName: string
+        candidateName: string,
+        candidateEmail: string
     ) => {
         const { error } = await supabase
             .from("applications")
@@ -227,15 +239,54 @@ function RecruiterDashboardContent() {
             return;
         }
 
-        // Notification Simulation
-        console.log("EMAIL SENT TO:", candidateName);
-        console.log("Congratulations! You have been shortlisted.");
-        console.log("TELEGRAM SENT TO:", candidateName);
-        console.log("Congratulations! You have been shortlisted.");
+        await fetch("/api/send-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: candidateEmail,
+                candidateName,
+            }),
+        });
 
         toast.success("Candidate Shortlisted & Notification Sent");
 
         fetchDashboardData();
+    };
+
+    const handleGenerateOffer = (
+        candidateName: string,
+        jobTitle: string,
+        companyName: string
+    ) => {
+        generateOfferLetter(
+            candidateName,
+            jobTitle,
+            companyName
+        );
+    };
+
+    const handleGenerateExperienceLetter = (
+        candidateName: string,
+        jobTitle: string,
+        companyName: string
+    ) => {
+        generateExperienceLetter(
+            candidateName,
+            jobTitle,
+            companyName
+        );
+    };
+
+    const handleGeneratePayslip = (
+        employeeName: string,
+        designation: string
+    ) => {
+        generatePayslip(
+            employeeName,
+            designation
+        );
     };
 
     if (loading) {
@@ -476,12 +527,49 @@ function RecruiterDashboardContent() {
                                                                 <UserCheck className="w-3.5 h-3.5" /> Shortlisted
                                                             </span>
                                                         ) : (
-                                                            <button
-                                                                onClick={() => shortlistCandidate(app.id, app.candidate_name)}
-                                                                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-emerald-600/10 cursor-pointer"
-                                                            >
-                                                                Shortlist
-                                                            </button>
+                                                            <div className="flex gap-2">
+                                                                <button
+                                                                    onClick={() => shortlistCandidate(app.id, app.candidate_name, app.candidate_email)}
+                                                                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-emerald-600/10 cursor-pointer"
+                                                                >
+                                                                    Shortlist
+                                                                </button>
+                                                                <button
+                                                                    onClick={() =>
+                                                                        handleGenerateOffer(
+                                                                            app.candidate_name,
+                                                                            app.job_title,
+                                                                            "Promtal Jobs"
+                                                                        )
+                                                                    }
+                                                                    className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-purple-600/10 cursor-pointer"
+                                                                >
+                                                                    Generate Offer
+                                                                </button>
+                                                                <button
+                                                                    onClick={() =>
+                                                                        handleGenerateExperienceLetter(
+                                                                            app.candidate_name,
+                                                                            app.job_title,
+                                                                            "Promtal Jobs"
+                                                                        )
+                                                                    }
+                                                                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-blue-600/10 cursor-pointer"
+                                                                >
+                                                                    Experience Letter
+                                                                </button>
+                                                                <button
+                                                                    onClick={() =>
+                                                                        handleGeneratePayslip(
+                                                                            app.candidate_name,
+                                                                            app.job_title
+                                                                        )
+                                                                    }
+                                                                    className="bg-orange-600 hover:bg-orange-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-orange-600/10 cursor-pointer"
+                                                                >
+                                                                    Payslip
+                                                                </button>
+                                                            </div>
                                                         )}
                                                     </td>
                                                 </tr>

@@ -7,6 +7,7 @@ import DashboardLayout from "@/components/DashboardLayout";
 interface ApplicationData {
     id: string;
     candidate_name: string;
+    candidate_email: string;
     skills: string;
     job_title: string;
     requirements: string;
@@ -17,6 +18,8 @@ interface ApplicationData {
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { toast } from "react-hot-toast";
 import StatusBadge from "@/components/StatusBadge";
+import { generateOfferLetter } from "@/lib/generateofferletter";
+import { generateExperienceLetter } from "@/lib/generateExperienceLetter";
 
 export default function ApplicationsPage() {
     return (
@@ -75,6 +78,12 @@ function ApplicationsPageContent() {
                 .eq("id", app.candidate_id)
                 .single();
 
+            const { data: userData } = await supabase
+                .from("users")
+                .select("email")
+                .eq("id", candidate?.user_id)
+                .single();
+
             const { data: job } = await supabase
                 .from("jobs")
                 .select("*")
@@ -97,6 +106,7 @@ function ApplicationsPageContent() {
                 id: app.id,
                 candidate_name:
                     candidate?.candidate_name || "Unknown",
+                candidate_email: userData?.email || "",
                 skills: candidate?.skills || "",
                 job_title: job?.title || "",
                 requirements: job?.requirements || "",
@@ -112,7 +122,9 @@ function ApplicationsPageContent() {
     };
 
     const shortlistCandidate = async (
-        applicationId: string
+        applicationId: string,
+        candidateName: string,
+        candidateEmail: string
     ) => {
         const { error } = await supabase
             .from("applications")
@@ -126,10 +138,45 @@ function ApplicationsPageContent() {
             return;
         }
 
+        await fetch("/api/send-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: candidateEmail,
+                candidateName,
+            }),
+        });
+
         toast.success("Candidate Shortlisted");
 
         fetchApplications();
 
+    };
+
+    const handleGenerateOffer = (
+        candidateName: string,
+        jobTitle: string,
+        companyName: string
+    ) => {
+        generateOfferLetter(
+            candidateName,
+            jobTitle,
+            companyName
+        );
+    };
+
+    const handleGenerateExperienceLetter = (
+        candidateName: string,
+        jobTitle: string,
+        companyName: string
+    ) => {
+        generateExperienceLetter(
+            candidateName,
+            jobTitle,
+            companyName
+        );
     };
 
     return (<DashboardLayout><div className="p-8"> <div className="max-w-7xl mx-auto">
@@ -201,14 +248,44 @@ function ApplicationsPageContent() {
                                             Shortlisted
                                         </span>
                                     ) : (
-                                        <button
-                                            onClick={() =>
-                                                shortlistCandidate(app.id)
-                                            }
-                                            className="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
-                                        >
-                                            Shortlist
-                                        </button>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() =>
+                                                    shortlistCandidate(
+                                                        app.id,
+                                                        app.candidate_name,
+                                                        app.candidate_email
+                                                    )
+                                                }
+                                                className="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                            >
+                                                Shortlist
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    handleGenerateOffer(
+                                                        app.candidate_name,
+                                                        app.job_title,
+                                                        "Promtal Jobs"
+                                                    )
+                                                }
+                                                className="bg-purple-600 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                            >
+                                                Generate Offer
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    handleGenerateExperienceLetter(
+                                                        app.candidate_name,
+                                                        app.job_title,
+                                                        "Promtal Jobs"
+                                                    )
+                                                }
+                                                className="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                            >
+                                                Experience Letter
+                                            </button>
+                                        </div>
                                     )}
                                 </td>
                             </tr>

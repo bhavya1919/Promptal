@@ -66,7 +66,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   ];
 
   const publicLinks = [
-    { name: "Jobs Board", href: "/", icon: Briefcase },
+    { name: "Jobs Board", href: "/jobs", icon: Briefcase },
   ];
 
   return (
