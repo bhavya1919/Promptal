@@ -38,6 +38,8 @@ export const viewport: Viewport = {
   themeColor: '#ecfdf5',
 }
 
+import ToastProvider from '@/components/ToastProvider'
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,6 +51,7 @@ export default function RootLayout({
       className={`light bg-background ${geistSans.variable} ${geistMono.variable}`}
     >
       <body className="font-sans antialiased">
+        <ToastProvider />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

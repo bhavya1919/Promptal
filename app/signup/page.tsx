@@ -6,6 +6,8 @@ import { Building2, Loader2, Mail, Lock, UserRound, Briefcase } from "lucide-rea
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { toast } from "react-hot-toast";
+
 export default function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,7 +31,7 @@ export default function SignupPage() {
             });
 
             if (error) {
-                alert(error.message);
+                toast.error(error.message);
                 return;
             }
 
@@ -48,17 +50,17 @@ export default function SignupPage() {
                     ]);
 
                 if (insertError) {
-                    alert(insertError.message);
+                    toast.error(insertError.message);
                     return;
                 }
             }
 
-            alert("Signup Successful! Please check your email or login.");
+            toast.success("Signup Successful! Please check your email or login.");
             router.push("/login");
 
         } catch (err) {
             console.error(err);
-            alert("Something went wrong");
+            toast.error("Something went wrong");
         } finally {
             setLoading(false);
         }
@@ -126,28 +128,42 @@ export default function SignupPage() {
                         </div>
 
                         <div className="space-y-4">
-                            <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
-                                <input
-                                    type="email"
-                                    required
-                                    placeholder="Email address"
-                                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
+                            <div className="space-y-1.5">
+                                <label htmlFor="email" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                    Email Address
+                                </label>
+                                <div className="relative">
+                                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        required
+                                        placeholder="Enter your email address"
+                                        aria-label="Email address"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </div>
                             </div>
 
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
-                                <input
-                                    type="password"
-                                    required
-                                    placeholder="Password"
-                                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
+                            <div className="space-y-1.5">
+                                <label htmlFor="password" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <input
+                                        id="password"
+                                        type="password"
+                                        required
+                                        placeholder="Create a strong password"
+                                        aria-label="Password"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                </div>
                             </div>
                         </div>
 

@@ -14,6 +14,8 @@ interface Job {
     job_type: string;
 }
 
+import { toast } from "react-hot-toast";
+
 export default function JobsPage() {
     const [jobs, setJobs] = useState<Job[]>([]);
     const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
@@ -75,7 +77,7 @@ export default function JobsPage() {
         } = await supabase.auth.getUser();
 
         if (!user) {
-            alert("Please login as a candidate");
+            toast.error("Please login as a candidate");
             return;
         }
 
@@ -86,7 +88,7 @@ export default function JobsPage() {
             .single();
 
         if (candidateError || !candidate) {
-            alert("Please complete your candidate profile first");
+            toast.error("Please complete your candidate profile first");
             return;
         }
 
@@ -101,11 +103,11 @@ export default function JobsPage() {
 
         if (error) {
             console.error(error);
-            alert(error.message);
+            toast.error(error.message);
             return;
         }
 
-        alert("Application Submitted Successfully!");
+        toast.success("Application Submitted Successfully!");
     };
 
     return (
@@ -123,42 +125,54 @@ export default function JobsPage() {
                 </div>
 
                 {/* Filters Section */}
-                <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col md:flex-row gap-4">
-                    <div className="flex-1 relative">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                        <input
-                            type="text"
-                            placeholder="Job title, keywords, or company..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-12 pr-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
-                        />
+                <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col md:flex-row gap-4">
+                    <div className="flex-1 space-y-1">
+                        <label htmlFor="search-jobs" className="sr-only">Search Jobs</label>
+                        <div className="relative">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+                            <input
+                                id="search-jobs"
+                                type="text"
+                                placeholder="Job title, keywords, or company..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all"
+                            />
+                        </div>
                     </div>
                     
-                    <div className="md:w-64 relative">
-                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                        <input
-                            type="text"
-                            placeholder="Location filter..."
-                            value={locationFilter}
-                            onChange={(e) => setLocationFilter(e.target.value)}
-                            className="w-full pl-12 pr-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
-                        />
+                    <div className="md:w-64 space-y-1">
+                        <label htmlFor="location-filter" className="sr-only">Filter by Location</label>
+                        <div className="relative">
+                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+                            <input
+                                id="location-filter"
+                                type="text"
+                                placeholder="Location filter..."
+                                value={locationFilter}
+                                onChange={(e) => setLocationFilter(e.target.value)}
+                                className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all"
+                            />
+                        </div>
                     </div>
 
-                    <div className="md:w-48 relative">
-                        <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                        <select
-                            value={typeFilter}
-                            onChange={(e) => setTypeFilter(e.target.value)}
-                            className="w-full pl-12 pr-8 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none cursor-pointer"
-                        >
-                            <option value="">All Types</option>
-                            <option value="Full Time">Full Time</option>
-                            <option value="Part Time">Part Time</option>
-                            <option value="Internship">Internship</option>
-                            <option value="Contract">Contract</option>
-                        </select>
+                    <div className="md:w-48 space-y-1">
+                        <label htmlFor="type-filter" className="sr-only">Filter by Job Type</label>
+                        <div className="relative">
+                            <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+                            <select
+                                id="type-filter"
+                                value={typeFilter}
+                                onChange={(e) => setTypeFilter(e.target.value)}
+                                className="w-full pl-12 pr-8 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all appearance-none cursor-pointer"
+                            >
+                                <option value="">All Types</option>
+                                <option value="Full Time">Full Time</option>
+                                <option value="Part Time">Part Time</option>
+                                <option value="Internship">Internship</option>
+                                <option value="Contract">Contract</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 

@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Building2, Loader2, Mail, Lock } from "lucide-react";
 import Link from "next/link";
 
+import { toast } from "react-hot-toast";
+
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -23,7 +25,7 @@ export default function LoginPage() {
             });
 
             if (error) {
-                alert(error.message);
+                toast.error(error.message);
                 return;
             }
 
@@ -34,9 +36,11 @@ export default function LoginPage() {
                 .single();
 
             if (!userData) {
-                alert("User not found");
+                toast.error("User not found");
                 return;
             }
+
+            toast.success("Welcome back!");
 
             if (userData.role === "candidate") {
                 router.push("/candidate/dashboard");
@@ -82,35 +86,50 @@ export default function LoginPage() {
 
                     <form onSubmit={handleLogin} className="space-y-6">
                         <div className="space-y-4">
-                            <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
-                                <input
-                                    type="email"
-                                    required
-                                    placeholder="Email address"
-                                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
+                            <div className="space-y-1.5">
+                                <label htmlFor="email" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                    Email Address
+                                </label>
+                                <div className="relative">
+                                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        required
+                                        placeholder="Enter your email address"
+                                        aria-label="Email address"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </div>
                             </div>
 
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    required
-                                    placeholder="Password"
-                                    className="w-full pl-10 pr-12 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
-                                >
-                                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                                </button>
+                            <div className="space-y-1.5">
+                                <label htmlFor="password" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <input
+                                        id="password"
+                                        type={showPassword ? "text" : "password"}
+                                        required
+                                        placeholder="Enter your password"
+                                        aria-label="Password"
+                                        className="w-full pl-10 pr-12 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        aria-label={showPassword ? "Hide password" : "Show password"}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                                    >
+                                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
