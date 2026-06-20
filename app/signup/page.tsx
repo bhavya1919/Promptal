@@ -11,6 +11,8 @@ import { toast } from "react-hot-toast";
 export default function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [companyName, setCompanyName] = useState("");
     const [role, setRole] = useState<"candidate" | "recruiter">("candidate");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -43,7 +45,7 @@ export default function SignupPage() {
                     .insert([
                         {
                             id: userId,
-                            name: email.split("@")[0],
+                            name: name || email.split("@")[0],
                             email,
                             role,
                         },
@@ -52,6 +54,18 @@ export default function SignupPage() {
                 if (insertError) {
                     toast.error(insertError.message);
                     return;
+                }
+
+                if (role === "recruiter" && companyName) {
+                    await supabase
+                        .from("companies")
+                        .insert([{ recruiter_id: userId, company_name: companyName }]);
+                }
+
+                if (role === "candidate" && name) {
+                    await supabase
+                        .from("candidates")
+                        .insert([{ user_id: userId, candidate_name: name }]);
                 }
             }
 
@@ -128,6 +142,46 @@ export default function SignupPage() {
                         </div>
 
                         <div className="space-y-4">
+                            <div className="space-y-1.5">
+                                <label htmlFor="name" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                    Full Name
+                                </label>
+                                <div className="relative">
+                                    <UserRound className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        required
+                                        placeholder="Enter your full name"
+                                        aria-label="Full name"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+
+                            {role === "recruiter" && (
+                                <div className="space-y-1.5">
+                                    <label htmlFor="companyName" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                        Company Name
+                                    </label>
+                                    <div className="relative">
+                                        <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                        <input
+                                            id="companyName"
+                                            type="text"
+                                            required
+                                            placeholder="Enter your company name"
+                                            aria-label="Company name"
+                                            className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                            value={companyName}
+                                            onChange={(e) => setCompanyName(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="space-y-1.5">
                                 <label htmlFor="email" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
                                     Email Address

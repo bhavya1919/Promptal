@@ -1,3 +1,6 @@
 name,email,skills,education,experience
-Bhargav,bhargav@gmail.com,Python|SQL,B.Tech,Intern
-Rahul,rahul@gmail.com,Power BI|Excel,BCA,Analyst
+Bhargav Ganta,bhargav@demo.com,"Python|SQL|Power BI","B.Tech CSE AIML","Centle Intern"
+Rahul Verma,rahul@demo.com,"Java|Spring Boot|MySQL","B.Tech CSE","Developer Intern"
+Ananya Reddy,ananya@demo.com,"Python|Tableau|SQL","MCA","Data Analyst Intern"
+Kiran Kumar,kiran@demo.com,"AWS|Docker|Kubernetes","B.Tech IT","Cloud Intern"
+Sneha Patel,sneha@demo.com,"React|Figma|UI UX","B.Des","Designer Intern"
