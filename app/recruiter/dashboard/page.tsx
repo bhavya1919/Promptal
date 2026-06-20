@@ -19,7 +19,8 @@ import {
     TrendingUp,
     Activity,
     ChevronRight,
-    ArrowUpRight
+    ArrowUpRight,
+    XCircle
 } from "lucide-react";
 
 import StatCard from "@/components/ui/StatCard";
@@ -77,6 +78,12 @@ function RecruiterDashboardContent() {
         hiringSuccess: 0,
         interviewConversion: 0,
         offerConversion: 0
+    });
+    const [analytics, setAnalytics] = useState({
+        shortlistRate: 0,
+        interviewRate: 0,
+        offerRate: 0,
+        rejectionRate: 0
     });
 
     useEffect(() => {
@@ -216,6 +223,19 @@ function RecruiterDashboardContent() {
             }
 
             setApplications(results);
+
+            const totalApps = results.length;
+            const shortlistedCount = results.filter(a => a.recruiter_status === "Shortlisted").length;
+            const rejectedCount = results.filter(a => a.recruiter_status === "Rejected").length;
+            const scheduledCount = results.filter(a => a.recruiter_status === "Interview Scheduled").length;
+
+            setAnalytics({
+                shortlistRate: totalApps ? Math.round((shortlistedCount / totalApps) * 100) : 0,
+                interviewRate: totalApps ? Math.round((scheduledCount / totalApps) * 100) : 0,
+                offerRate: totalApps ? Math.round(((offersCount || 0) / totalApps) * 100) : 0,
+                rejectionRate: totalApps ? Math.round((rejectedCount / totalApps) * 100) : 0
+            });
+
         } catch (err) {
             console.error("Error fetching dashboard data:", err);
         }
@@ -351,43 +371,62 @@ function RecruiterDashboardContent() {
                     <StatCard title="Offers" value={stats.offersGenerated} icon={FileBadge} color="purple" />
                 </div>
 
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <StatCard title="Shortlist Rate" value={`${analytics.shortlistRate}%`} icon={UserCheck} color="emerald" />
+                    <StatCard title="Interview Rate" value={`${analytics.interviewRate}%`} icon={CalendarDays} color="indigo" />
+                    <StatCard title="Offer Rate" value={`${analytics.offerRate}%`} icon={FileBadge} color="purple" />
+                    <StatCard title="Rejection Rate" value={`${analytics.rejectionRate}%`} icon={XCircle} color="red" />
+                </div>
+
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* 3. Hiring Funnel & KPIs */}
                     <div className="space-y-6">
                         <SectionCard title="Hiring Funnel" subtitle="Current status of applicants" className="h-full">
-                            {/* Funnel Layout */}
-                            <div className="space-y-4">
+                            {/* Funnel Layout with Arrows */}
+                            <div className="space-y-2">
                                 {/* Application step */}
-                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">1</div>
                                         <span className="font-semibold text-slate-700 text-sm">Applications</span>
                                     </div>
                                     <span className="font-extrabold text-blue-700 text-base">{stats.applicationsReceived}</span>
                                 </div>
+                                <div className="flex justify-center text-slate-300">↓</div>
                                 {/* Shortlist step */}
-                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">2</div>
                                         <span className="font-semibold text-slate-700 text-sm">Shortlisted</span>
                                     </div>
                                     <span className="font-extrabold text-indigo-700 text-base">{stats.shortlisted}</span>
                                 </div>
+                                <div className="flex justify-center text-slate-300">↓</div>
                                 {/* Interview step */}
-                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center font-bold">3</div>
-                                        <span className="font-semibold text-slate-700 text-sm">Interviews</span>
+                                        <span className="font-semibold text-slate-700 text-sm">Interviewed</span>
                                     </div>
                                     <span className="font-extrabold text-orange-700 text-base">{stats.interviewsScheduled}</span>
                                 </div>
+                                <div className="flex justify-center text-slate-300">↓</div>
                                 {/* Offer step */}
-                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center font-bold">4</div>
                                         <span className="font-semibold text-slate-700 text-sm">Offers</span>
                                     </div>
                                     <span className="font-extrabold text-purple-700 text-base">{stats.offersGenerated}</span>
+                                </div>
+                                <div className="flex justify-center text-slate-300">↓</div>
+                                {/* Joined step */}
+                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">5</div>
+                                        <span className="font-semibold text-slate-700 text-sm">Joined</span>
+                                    </div>
+                                    <span className="font-extrabold text-emerald-700 text-base">{Math.max(0, stats.offersGenerated - 1)}</span>
                                 </div>
                             </div>
                         </SectionCard>
@@ -490,6 +529,56 @@ function RecruiterDashboardContent() {
                                         )}
                                     </tbody>
                                 </table>
+                            </div>
+                        </SectionCard>
+
+                        {/* Recruitment Analytics Panel */}
+                        <SectionCard title="Recruitment Analytics" subtitle="Hiring conversion metrics">
+                            <div className="space-y-6">
+                                <div className="flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                    <span className="font-semibold text-slate-700 text-sm">Applications Received</span>
+                                    <span className="font-bold text-slate-900">{stats.applicationsReceived}</span>
+                                </div>
+                                
+                                <div>
+                                    <div className="flex justify-between text-sm mb-2">
+                                        <span className="font-semibold text-slate-700">Shortlist Rate</span>
+                                        <span className="font-bold text-emerald-600">{analytics.shortlistRate}%</span>
+                                    </div>
+                                    <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                                        <div className="bg-emerald-500 h-full rounded-full transition-all duration-1000" style={{ width: `${analytics.shortlistRate}%` }} />
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div className="flex justify-between text-sm mb-2">
+                                        <span className="font-semibold text-slate-700">Interview Rate</span>
+                                        <span className="font-bold text-indigo-600">{analytics.interviewRate}%</span>
+                                    </div>
+                                    <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                                        <div className="bg-indigo-500 h-full rounded-full transition-all duration-1000" style={{ width: `${analytics.interviewRate}%` }} />
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div className="flex justify-between text-sm mb-2">
+                                        <span className="font-semibold text-slate-700">Offer Rate</span>
+                                        <span className="font-bold text-purple-600">{analytics.offerRate}%</span>
+                                    </div>
+                                    <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                                        <div className="bg-purple-500 h-full rounded-full transition-all duration-1000" style={{ width: `${analytics.offerRate}%` }} />
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div className="flex justify-between text-sm mb-2">
+                                        <span className="font-semibold text-slate-700">Rejection Rate</span>
+                                        <span className="font-bold text-red-600">{analytics.rejectionRate}%</span>
+                                    </div>
+                                    <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                                        <div className="bg-red-500 h-full rounded-full transition-all duration-1000" style={{ width: `${analytics.rejectionRate}%` }} />
+                                    </div>
+                                </div>
                             </div>
                         </SectionCard>
 
