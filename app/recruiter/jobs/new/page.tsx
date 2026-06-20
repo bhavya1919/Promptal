@@ -52,7 +52,6 @@ function NewJobPageContent() {
                         location: location.trim(),
                         salary_range: salaryRange.trim(),
                         job_type: jobType,
-                        status: "Active",
                     }
                 ]);
 
