@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useUserRole, UserRole } from "@/hooks/useUserRole";
 import { useRouter } from "next/navigation";
-import { Loader2, ShieldAlert, Home } from "lucide-react";
+import { Loader2, ShieldAlert, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 interface ProtectedRouteProps {
@@ -56,13 +56,13 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
                     </div>
 
                     <div className="pt-2">
-                        <Link 
-                            href="/" 
+                        <button 
+                            onClick={() => router.back()}
                             className="inline-flex items-center justify-center gap-2 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-6 rounded-xl transition-all shadow-md hover:shadow-lg shadow-emerald-600/10 focus:ring-4 focus:ring-emerald-500/20 cursor-pointer"
                         >
-                            <Home className="w-5 h-5" />
-                            Return Home
-                        </Link>
+                            <ArrowLeft className="w-5 h-5" />
+                            Go Back
+                        </button>
                     </div>
                 </div>
             </div>
