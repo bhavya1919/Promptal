@@ -82,16 +82,31 @@ function CandidateOffersContent() {
         }
     };
 
-    const updateOfferStatus = async (offerId: string, newStatus: string) => {
+    const updateOfferStatus = async (offer: OfferData, newStatus: string) => {
         try {
             const { error } = await supabase
                 .from("offer_letters")
                 .update({ status: newStatus })
-                .eq("id", offerId);
+                .eq("id", offer.id);
 
             if (error) throw error;
 
             toast.success(`Offer ${newStatus}!`);
+
+            if (newStatus === "Accepted") {
+                await fetch("/api/send-email", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        type: "offerAccepted",
+                        candidateName: offer.candidate_name,
+                        jobTitle: offer.job_title,
+                    }),
+                });
+            }
+
             fetchOffers();
         } catch (error: any) {
             toast.error(error.message || `Failed to update offer to ${newStatus}`);
@@ -166,13 +181,13 @@ function CandidateOffersContent() {
                                     {(!offer.status || offer.status === "Generated" || offer.status === "Pending") ? (
                                         <div className="flex gap-3 mt-4">
                                             <button
-                                                onClick={() => updateOfferStatus(offer.id, "Accepted")}
+                                                onClick={() => updateOfferStatus(offer, "Accepted")}
                                                 className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2"
                                             >
                                                 <CheckCircle className="w-4 h-4" /> Accept Offer
                                             </button>
                                             <button
-                                                onClick={() => updateOfferStatus(offer.id, "Declined")}
+                                                onClick={() => updateOfferStatus(offer, "Declined")}
                                                 className="flex-1 bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 hover:border-rose-300 font-semibold py-2.5 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2"
                                             >
                                                 <XCircle className="w-4 h-4" /> Decline Offer

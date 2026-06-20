@@ -17,6 +17,7 @@ interface ApplicationData {
     ai_score: number;
     resume_url: string;
     created_at: string;
+    offer_status?: string;
 }
 
 import { X } from "lucide-react";
@@ -76,6 +77,17 @@ function ApplicationsPageContent() {
             return;
         }
 
+        const appIds = applicationsData?.map(a => a.id) || [];
+        const { data: offersData } = await supabase
+            .from("offer_letters")
+            .select("application_id, status")
+            .in("application_id", appIds);
+
+        const offerStatusMap = new Map();
+        offersData?.forEach(offer => {
+            offerStatusMap.set(offer.application_id, offer.status);
+        });
+
         const results: ApplicationData[] = [];
 
         for (const app of applicationsData || []) {
@@ -124,6 +136,7 @@ function ApplicationsPageContent() {
                 ai_score: score,
                 resume_url: candidate?.resume_url || "",
                 created_at: app.created_at || new Date().toISOString(),
+                offer_status: offerStatusMap.get(app.id) || "None",
             });
         }
 
@@ -292,6 +305,9 @@ function ApplicationsPageContent() {
                                 Status
                             </th>
                             <th className="text-left p-4">
+                                Offer Status
+                            </th>
+                            <th className="text-left p-4">
                                 Action
                             </th>
                         </tr>
@@ -343,6 +359,20 @@ function ApplicationsPageContent() {
 
                                 <td className="p-4">
                                     <StatusBadge status={app.recruiter_status} />
+                                </td>
+
+                                <td className="p-4">
+                                    {app.offer_status && app.offer_status !== "None" ? (
+                                        <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
+                                            app.offer_status === 'Accepted' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                                            app.offer_status === 'Declined' ? 'bg-rose-50 text-rose-700 border-rose-200' :
+                                            'bg-amber-50 text-amber-700 border-amber-200'
+                                        }`}>
+                                            {app.offer_status}
+                                        </span>
+                                    ) : (
+                                        <span className="text-slate-400 italic text-xs">No Offer</span>
+                                    )}
                                 </td>
 
                                 <td className="p-4">

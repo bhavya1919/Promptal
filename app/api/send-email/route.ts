@@ -4,12 +4,21 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
     try {
-        const { email, candidateName, status } = await req.json();
+        const { email, candidateName, status, type, jobTitle } = await req.json();
 
         let subject = "Application Status Update";
         let message = `We wanted to update you on your recent application.`;
+        let recipient = email;
 
-        if (status === "Shortlisted") {
+        if (type === "offerAccepted") {
+            subject = `Offer Accepted - ${candidateName}`;
+            message = `Candidate has accepted the offer.<br/><br/>
+            <strong>Candidate:</strong> ${candidateName}<br/>
+            <strong>Position:</strong> ${jobTitle}<br/>
+            <strong>Date:</strong> ${new Date().toLocaleDateString()}`;
+            // When an offer is accepted, notify the recruiter (default fallback or logic)
+            recipient = process.env.RECRUITER_EMAIL || "recruiter@promtal.demo";
+        } else if (status === "Shortlisted") {
             subject = "🎉 Congratulations! You Have Been Shortlisted";
             message = `We are pleased to inform you that you have been <strong>shortlisted</strong> for the next stage of the recruitment process. Our recruitment team will contact you shortly regarding interview scheduling and further steps.`;
         } else if (status === "Rejected") {
@@ -25,12 +34,12 @@ export async function POST(req: Request) {
 
         const data = await resend.emails.send({
             from: "onboarding@resend.dev",
-            to: [email],
+            to: [recipient],
             subject: subject,
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
                     <h2 style="color:#333;">
-                        Hello ${candidateName || "Candidate"},
+                        Hello ${type === 'offerAccepted' ? 'Recruiter' : (candidateName || "Candidate")},
                     </h2>
 
                     <p>
