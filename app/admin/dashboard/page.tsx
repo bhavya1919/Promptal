@@ -126,8 +126,7 @@ function AdminDashboardContent() {
         });
         setExperienceStats(experienceCount);
 
-        console.log("Education Stats:", educationCount);
-        console.log("Experience Stats:", experienceCount);
+        setExperienceStats(experienceCount);
     };
 
     const filteredCompanies = companies.filter(c => c.company_name?.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -166,6 +165,62 @@ function AdminDashboardContent() {
                     </div>
                     <div onClick={() => openPanel("offers")} className="cursor-pointer hover:scale-105 transition-all duration-300">
                         <StatCard title="Offer Letters Generated" value={stats.offers} icon={FileBadge} color="indigo" />
+                    </div>
+                </div>
+
+                <div className="mt-8 bg-white p-6 rounded-xl shadow border border-slate-100">
+                    <h2 className="text-2xl font-bold mb-6 text-slate-800">
+                        Diversity Reporting
+                    </h2>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="border border-slate-200 rounded-lg p-5 bg-slate-50">
+                            <h3 className="font-semibold mb-4 text-slate-700 uppercase tracking-wider text-sm">
+                                Education Distribution
+                            </h3>
+
+                            {Object.entries(educationStats).map(([education, count]) => (
+                                <div key={education} className="mb-4">
+                                    <div className="flex justify-between text-sm mb-1.5 font-medium text-slate-600">
+                                        <span>{education}</span>
+                                        <span className="font-bold text-slate-800">{count}</span>
+                                    </div>
+
+                                    <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                                        <div
+                                            className="bg-blue-500 h-full rounded-full transition-all duration-1000"
+                                            style={{
+                                                width: `${(count / (candidates.length || 1)) * 100}%`,
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="border border-slate-200 rounded-lg p-5 bg-slate-50">
+                            <h3 className="font-semibold mb-4 text-slate-700 uppercase tracking-wider text-sm">
+                                Experience Distribution
+                            </h3>
+
+                            {Object.entries(experienceStats).map(([experience, count]) => (
+                                <div key={experience} className="mb-4">
+                                    <div className="flex justify-between text-sm mb-1.5 font-medium text-slate-600">
+                                        <span>{experience}</span>
+                                        <span className="font-bold text-slate-800">{count}</span>
+                                    </div>
+
+                                    <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                                        <div
+                                            className="bg-emerald-500 h-full rounded-full transition-all duration-1000"
+                                            style={{
+                                                width: `${(count / (candidates.length || 1)) * 100}%`,
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
