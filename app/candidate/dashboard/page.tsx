@@ -131,8 +131,8 @@ function CandidateDashboardContent() {
             .upload(fileName, resumeFile);
 
         if (error) {
-            console.error(error);
-            return null;
+            console.error("Storage upload error:", error);
+            throw error;
         }
 
         const {
@@ -152,7 +152,14 @@ function CandidateDashboardContent() {
             return;
         }
 
-        const uploadedResumeUrl = await uploadResume();
+        let uploadedResumeUrl = null;
+        try {
+            uploadedResumeUrl = await uploadResume();
+        } catch (uploadErr: any) {
+            toast.error(uploadErr.message || "Failed to upload resume to Storage.");
+            return;
+        }
+        
         const finalResumeUrl = uploadedResumeUrl || resumeUrl;
 
         let error;
