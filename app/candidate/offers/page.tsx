@@ -137,21 +137,21 @@ function CandidateOffersContent() {
                 />
 
                 {offers.length === 0 ? (
-                    <div className="bg-white rounded-2xl shadow p-12 text-center border border-slate-100 flex flex-col items-center">
-                        <div className="bg-slate-50 p-4 rounded-full mb-4">
+                    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow p-12 text-center border border-slate-100 dark:border-slate-700 flex flex-col items-center">
+                        <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-full mb-4">
                             <FileText className="w-10 h-10 text-slate-300" />
                         </div>
-                        <h3 className="text-xl font-bold text-slate-700 mb-2">No Offers Yet</h3>
-                        <p className="text-slate-500">When recruiters generate an offer for you, it will appear here.</p>
+                        <h3 className="text-xl font-bold text-slate-700 dark:text-slate-50 mb-2">No Offers Yet</h3>
+                        <p className="text-slate-500 dark:text-slate-400">When recruiters generate an offer for you, it will appear here.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {offers.map((offer) => (
-                            <div key={offer.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
-                                <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-start">
+                            <div key={offer.id} className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-md transition-shadow">
+                                <div className="p-6 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 flex justify-between items-start">
                                     <div>
                                         <h3 className="text-xl font-bold text-slate-900">{offer.job_title}</h3>
-                                        <p className="text-slate-500 font-medium mt-1">{offer.company_name}</p>
+                                        <p className="text-slate-500 dark:text-slate-400 font-medium mt-1">{offer.company_name}</p>
                                     </div>
                                     <div className={`px-3 py-1 rounded-full text-xs font-bold border flex items-center gap-1.5 ${
                                         offer.status === 'Accepted' 
@@ -169,12 +169,12 @@ function CandidateOffersContent() {
                                 <div className="p-6">
                                     <div className="mb-6 flex gap-8">
                                         <div>
-                                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Date</p>
-                                            <p className="font-medium text-slate-800">{new Date(offer.offer_date).toLocaleDateString()}</p>
+                                            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Date</p>
+                                            <p className="font-medium text-slate-800 dark:text-slate-50">{new Date(offer.offer_date).toLocaleDateString()}</p>
                                         </div>
                                         <div>
-                                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Candidate</p>
-                                            <p className="font-medium text-slate-800">{offer.candidate_name}</p>
+                                            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Candidate</p>
+                                            <p className="font-medium text-slate-800 dark:text-slate-50">{offer.candidate_name}</p>
                                         </div>
                                     </div>
 
@@ -182,13 +182,13 @@ function CandidateOffersContent() {
                                         <div className="flex gap-3 mt-4">
                                             <button
                                                 onClick={() => updateOfferStatus(offer, "Accepted")}
-                                                className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2"
+                                                className="flex-1 bg-emerald-600 dark:bg-green-700 dark:text-slate-50 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2"
                                             >
                                                 <CheckCircle className="w-4 h-4" /> Accept Offer
                                             </button>
                                             <button
                                                 onClick={() => updateOfferStatus(offer, "Declined")}
-                                                className="flex-1 bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 hover:border-rose-300 font-semibold py-2.5 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2"
+                                                className="flex-1 bg-white dark:bg-slate-800 hover:bg-rose-50 text-rose-600 border border-rose-200 hover:border-rose-300 font-semibold py-2.5 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2"
                                             >
                                                 <XCircle className="w-4 h-4" /> Decline Offer
                                             </button>

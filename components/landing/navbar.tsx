@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
-import { Sparkles, ChevronDown, Menu, X } from "lucide-react"
+import { Sparkles, ChevronDown, Menu, X, Sun, Moon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -32,6 +32,32 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
+  const [isDark, setIsDark] = useState(false)
+  useEffect(() => {
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      setIsDark(true)
+      document.documentElement.classList.add('dark')
+    } else {
+      setIsDark(false)
+      document.documentElement.classList.remove('dark')
+    }
+  }, [])
+
+  const toggleTheme = () => {
+    if (isDark) {
+      document.documentElement.classList.remove('dark')
+      localStorage.theme = 'light'
+      setIsDark(false)
+    } else {
+      document.documentElement.classList.add('dark')
+      localStorage.theme = 'dark'
+      setIsDark(true)
+    }
+  }
+
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div
@@ -45,12 +71,8 @@ export function Navbar() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           {/* Logo */}
           <a href="#home" className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-              <Sparkles className="h-5 w-5 text-accent" />
-            </span>
-            <span className="text-lg font-semibold tracking-tight text-primary">
-              Promtal<span className="text-accent"> Jobs</span>
-            </span>
+            <img src="/Navbar-logo.png" alt="Promptal Hiring Solutions" className="h-9 w-auto dark:hidden" />
+            <img src="/Navbar-logo-dark.png" alt="Promptal Hiring Solutions" className="h-9 w-auto hidden dark:block" />
           </a>
 
           {/* Desktop nav */}
@@ -77,7 +99,7 @@ export function Navbar() {
                     transition={{ duration: 0.18 }}
                     className="absolute left-0 top-full w-52 pt-2"
                   >
-                    <div className="overflow-hidden rounded-xl border border-border bg-card p-1.5 shadow-lg">
+                    <div className="overflow-hidden rounded-xl border border-border bg-card p-1.5 shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)]">
                       {productLinks.map((item) => (
                         <a
                           key={item.label}
@@ -102,6 +124,13 @@ export function Navbar() {
 
           {/* Desktop actions */}
           <div className="hidden items-center gap-2 lg:flex">
+            <button
+              onClick={toggleTheme}
+              className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground/80 transition-colors hover:bg-muted hover:text-primary"
+              aria-label="Toggle theme"
+            >
+              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
             <Link href="/login">
               <Button
                 variant="ghost"
@@ -124,13 +153,22 @@ export function Navbar() {
           </div>
 
           {/* Mobile toggle */}
-          <button
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-primary lg:hidden"
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              onClick={toggleTheme}
+              className="flex h-10 w-10 items-center justify-center rounded-lg text-primary"
+              aria-label="Toggle theme"
+            >
+              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+            <button
+              className="flex h-10 w-10 items-center justify-center rounded-lg text-primary"
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </nav>
 
         {/* Mobile menu */}

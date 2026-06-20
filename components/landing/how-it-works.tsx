@@ -46,7 +46,7 @@ export function HowItWorks() {
                 <motion.span
                   whileHover={{ scale: 1.08 }}
                   transition={{ type: "spring", stiffness: 300, damping: 17 }}
-                  className="relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg"
+                  className="relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
                 >
                   <s.icon className="h-7 w-7 text-accent" />
                 </motion.span>

@@ -25,7 +25,7 @@ export default function StatCard({
 }: StatCardProps) {
     if (loading) {
         return (
-            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm animate-pulse space-y-4">
+            <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm animate-pulse space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="h-4 bg-slate-200 rounded w-24"></div>
                     <div className="w-10 h-10 bg-slate-200 rounded-xl"></div>
@@ -70,29 +70,29 @@ export default function StatCard({
     }[color];
 
     return (
-        <div className="group bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-slate-200 transition-all duration-300 transform hover:-translate-y-0.5 flex flex-col justify-between">
+        <div className="group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-slate-200 transition-all duration-300 transform hover:-translate-y-0.5 flex flex-col justify-between">
             <div className="flex justify-between items-start mb-4">
-                <span className="text-sm font-semibold text-slate-500 tracking-wide">{title}</span>
+                <span className="text-sm font-semibold text-slate-500 dark:text-slate-300 tracking-wide">{title}</span>
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-md ${colorConfig.iconBg} ${colorConfig.glow} group-hover:scale-110 transition-transform duration-300`}>
                     <Icon className="w-5 h-5" />
                 </div>
             </div>
             
             <div className="space-y-1">
-                <span className="text-3xl font-extrabold text-slate-900 tracking-tight block">
+                <span className="text-3xl font-extrabold text-slate-900 dark:text-slate-50 tracking-tight block">
                     {value}
                 </span>
                 
                 <div className="flex items-center gap-2">
                     {trend && (
                         <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-bold ${
-                            trend.isPositive ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-700"
+                            trend.isPositive ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400" : "bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400"
                         }`}>
                             {trend.isPositive ? "+" : ""}{trend.value}
                         </span>
                     )}
                     {description && (
-                        <span className="text-xs text-slate-400 font-medium">
+                        <span className="text-xs text-slate-400 dark:text-slate-400 font-medium">
                             {description}
                         </span>
                     )}

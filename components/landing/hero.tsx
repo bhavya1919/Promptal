@@ -182,7 +182,7 @@ function HeroVisual() {
       <motion.div
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -right-4 -top-4 rounded-2xl border border-border bg-card px-4 py-3 shadow-lg"
+        className="absolute -right-4 -top-4 rounded-2xl border border-border bg-card px-4 py-3 shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)]"
       >
         <div className="text-2xl font-bold text-accent">95%</div>
         <div className="text-xs text-muted-foreground">Accuracy</div>

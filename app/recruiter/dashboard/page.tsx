@@ -341,16 +341,16 @@ function RecruiterDashboardContent() {
                     subtitle="Manage hiring, applications, interviews and offers"
                     actions={
                         <div className="flex flex-wrap gap-2">
-                            <Link href="/recruiter/jobs/new" className="flex items-center gap-1.5 bg-emerald-600 text-white hover:bg-emerald-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm shadow-emerald-600/10 cursor-pointer">
+                            <Link href="/recruiter/jobs/new" className="flex items-center gap-1.5 bg-emerald-600 dark:bg-green-700 dark:text-slate-50 text-white hover:bg-emerald-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm shadow-emerald-600/10 cursor-pointer">
                                 <PlusCircle className="w-4 h-4" /> Post Job
                             </Link>
-                            <Link href="/recruiter/applications" className="flex items-center gap-1.5 bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer">
-                                <FileText className="w-4 h-4 text-emerald-600" /> View Applications
+                            <Link href="/recruiter/applications" className="flex items-center gap-1.5 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer">
+                                <FileText className="w-4 h-4 text-emerald-600 dark:text-green-400" /> View Applications
                             </Link>
-                            <Link href="/recruiter/interviews" className="flex items-center gap-1.5 bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer">
+                            <Link href="/recruiter/interviews" className="flex items-center gap-1.5 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer">
                                 <CalendarDays className="w-4 h-4 text-orange-500" /> Schedule Interviews
                             </Link>
-                            <Link href="/recruiter/offers" className="flex items-center gap-1.5 bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer">
+                            <Link href="/recruiter/offers" className="flex items-center gap-1.5 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm cursor-pointer">
                                 <FileBadge className="w-4 h-4 text-purple-500" /> Generate Offers
                             </Link>
                         </div>
@@ -385,54 +385,54 @@ function RecruiterDashboardContent() {
                             {/* Funnel Layout with Arrows */}
                             <div className="space-y-2">
                                 {/* Application step */}
-                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
+                                <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">1</div>
-                                        <span className="font-semibold text-slate-700 text-sm">Applications</span>
+                                        <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">1</div>
+                                        <span className="font-semibold text-slate-700 dark:text-slate-50 text-sm">Applications</span>
                                     </div>
-                                    <span className="font-extrabold text-blue-700 text-base">{stats.applicationsReceived}</span>
+                                    <span className="font-extrabold text-blue-700 dark:text-blue-400 text-base">{stats.applicationsReceived}</span>
                                 </div>
                                 <div className="flex justify-center text-slate-300">↓</div>
                                 {/* Shortlist step */}
-                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
+                                <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">2</div>
-                                        <span className="font-semibold text-slate-700 text-sm">Shortlisted</span>
+                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">2</div>
+                                        <span className="font-semibold text-slate-700 dark:text-slate-50 text-sm">Shortlisted</span>
                                     </div>
-                                    <span className="font-extrabold text-indigo-700 text-base">{stats.shortlisted}</span>
+                                    <span className="font-extrabold text-indigo-700 dark:text-indigo-400 text-base">{stats.shortlisted}</span>
                                 </div>
                                 <div className="flex justify-center text-slate-300">↓</div>
                                 {/* Interview step */}
-                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
+                                <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center font-bold">3</div>
-                                        <span className="font-semibold text-slate-700 text-sm">Interviewed</span>
+                                        <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 dark:text-orange-400 flex items-center justify-center font-bold">3</div>
+                                        <span className="font-semibold text-slate-700 dark:text-slate-50 text-sm">Interviewed</span>
                                     </div>
-                                    <span className="font-extrabold text-orange-700 text-base">{stats.interviewsScheduled}</span>
+                                    <span className="font-extrabold text-orange-700 dark:text-orange-400 text-base">{stats.interviewsScheduled}</span>
                                 </div>
                                 <div className="flex justify-center text-slate-300">↓</div>
                                 {/* Offer step */}
-                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
+                                <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center font-bold">4</div>
-                                        <span className="font-semibold text-slate-700 text-sm">Offers</span>
+                                        <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">4</div>
+                                        <span className="font-semibold text-slate-700 dark:text-slate-50 text-sm">Offers</span>
                                     </div>
-                                    <span className="font-extrabold text-purple-700 text-base">{stats.offersGenerated}</span>
+                                    <span className="font-extrabold text-purple-700 dark:text-purple-400 text-base">{stats.offersGenerated}</span>
                                 </div>
                                 <div className="flex justify-center text-slate-300">↓</div>
                                 {/* Joined step */}
-                                <div className="flex items-center justify-between bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
+                                <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">5</div>
-                                        <span className="font-semibold text-slate-700 text-sm">Joined</span>
+                                        <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 dark:text-green-400 flex items-center justify-center font-bold">5</div>
+                                        <span className="font-semibold text-slate-700 dark:text-slate-50 text-sm">Joined</span>
                                     </div>
-                                    <span className="font-extrabold text-emerald-700 text-base">{Math.max(0, stats.offersGenerated - 1)}</span>
+                                    <span className="font-extrabold text-emerald-700 dark:text-green-400 text-base">{Math.max(0, stats.offersGenerated - 1)}</span>
                                 </div>
                             </div>
                         </SectionCard>
 
                         {/* KPI Block */}
-                        <div className="bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl shadow-md p-6 text-white relative overflow-hidden">
+                        <div className="bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl shadow-md dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] p-6 text-white relative overflow-hidden">
                             <div className="absolute -right-4 -top-4 w-24 h-24 bg-emerald-500 rounded-full opacity-50 blur-xl"></div>
                             <h2 className="text-lg font-bold mb-4 flex items-center gap-2 relative z-10">
                                 <TrendingUp className="w-5 h-5 text-emerald-200" /> Dashboard KPIs
@@ -459,7 +459,7 @@ function RecruiterDashboardContent() {
                         {/* Recent Activity */}
                         <SectionCard title="Recent Activity" subtitle="Updates from applicants">
                             {applications.length === 0 ? (
-                                <p className="text-slate-500 italic text-center py-4">No recent activity.</p>
+                                <p className="text-slate-500 dark:text-slate-400 italic text-center py-4">No recent activity.</p>
                             ) : (
                                 <div className="space-y-5">
                                     {applications.slice(0, 4).map((app, idx) => (
@@ -475,11 +475,11 @@ function RecruiterDashboardContent() {
                                                     <div className="w-px h-full bg-slate-200 mt-2"></div>
                                                 )}
                                             </div>
-                                            <div className="bg-slate-50 rounded-xl p-4 flex-1 border border-slate-100 shadow-sm hover:bg-slate-100/50 transition-colors">
-                                                <p className="text-sm text-slate-800">
-                                                    <span className="font-bold text-slate-900">{app.candidate_name}</span> has been set to <span className="font-semibold text-emerald-600">{app.recruiter_status}</span> for <span className="font-bold text-slate-900">{app.job_title}</span>
+                                            <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-4 flex-1 border border-slate-100 dark:border-slate-700 shadow-sm hover:bg-slate-100/50 transition-colors">
+                                                <p className="text-sm text-slate-800 dark:text-slate-50">
+                                                    <span className="font-bold text-slate-900 dark:text-slate-50">{app.candidate_name}</span> has been set to <span className="font-semibold text-emerald-600 dark:text-green-400">{app.recruiter_status}</span> for <span className="font-bold text-slate-900 dark:text-slate-50">{app.job_title}</span>
                                                 </p>
-                                                <p className="text-xs text-slate-400 mt-1.5 font-medium">
+                                                <p className="text-xs text-slate-400 dark:text-slate-400 mt-1.5 font-medium">
                                                     {app.created_at ? new Date(app.created_at).toLocaleDateString() : 'Recently'}
                                                 </p>
                                             </div>
@@ -494,7 +494,7 @@ function RecruiterDashboardContent() {
                             title="Recent Jobs"
                             subtitle="Overview of open roles"
                             actions={
-                                <Link href="/jobs" className="text-xs text-indigo-600 font-bold hover:text-indigo-700 flex items-center gap-0.5">
+                                <Link href="/jobs" className="text-xs text-indigo-600 dark:text-indigo-400 font-bold hover:text-indigo-700 flex items-center gap-0.5">
                                     View All <ChevronRight className="w-3.5 h-3.5" />
                                 </Link>
                             }
@@ -502,25 +502,25 @@ function RecruiterDashboardContent() {
                         >
                             <div className="overflow-x-auto">
                                 <table className="w-full text-sm">
-                                    <thead className="bg-slate-50/75 border-b border-slate-100">
+                                    <thead className="bg-slate-50/75 dark:bg-slate-800/75 border-b border-slate-100 dark:border-slate-700">
                                         <tr>
-                                            <th className="text-left p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Job Title</th>
-                                            <th className="text-left p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Location</th>
-                                            <th className="text-left p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
+                                            <th className="text-left p-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Job Title</th>
+                                            <th className="text-left p-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Location</th>
+                                            <th className="text-left p-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
                                         {recentJobs.length === 0 ? (
                                             <tr>
-                                                <td colSpan={3} className="p-8 text-center text-slate-500">No jobs posted yet.</td>
+                                                <td colSpan={3} className="p-8 text-center text-slate-500 dark:text-slate-400">No jobs posted yet.</td>
                                             </tr>
                                         ) : (
                                             recentJobs.map((job) => (
-                                                <tr key={job.id} className="hover:bg-slate-50/70 transition-colors">
-                                                    <td className="p-4 font-semibold text-slate-900">{job.title}</td>
-                                                    <td className="p-4 text-slate-600">{job.location}</td>
+                                                <tr key={job.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-700/50 transition-colors">
+                                                    <td className="p-4 font-semibold text-slate-900 dark:text-slate-50">{job.title}</td>
+                                                    <td className="p-4 text-slate-600 dark:text-slate-300">{job.location}</td>
                                                     <td className="p-4">
-                                                        <span className="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-200/50">
+                                                        <span className="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 dark:text-green-400 text-xs font-bold rounded-full border border-emerald-200/50">
                                                             {job.status}
                                                         </span>
                                                     </td>
@@ -535,15 +535,15 @@ function RecruiterDashboardContent() {
                         {/* Recruitment Analytics Panel */}
                         <SectionCard title="Recruitment Analytics" subtitle="Hiring conversion metrics">
                             <div className="space-y-6">
-                                <div className="flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
-                                    <span className="font-semibold text-slate-700 text-sm">Applications Received</span>
-                                    <span className="font-bold text-slate-900">{stats.applicationsReceived}</span>
+                                <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-900 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                    <span className="font-semibold text-slate-700 dark:text-slate-50 text-sm">Applications Received</span>
+                                    <span className="font-bold text-slate-900 dark:text-slate-50">{stats.applicationsReceived}</span>
                                 </div>
                                 
                                 <div>
                                     <div className="flex justify-between text-sm mb-2">
-                                        <span className="font-semibold text-slate-700">Shortlist Rate</span>
-                                        <span className="font-bold text-emerald-600">{analytics.shortlistRate}%</span>
+                                        <span className="font-semibold text-slate-700 dark:text-slate-50">Shortlist Rate</span>
+                                        <span className="font-bold text-emerald-600 dark:text-green-400">{analytics.shortlistRate}%</span>
                                     </div>
                                     <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
                                         <div className="bg-emerald-500 h-full rounded-full transition-all duration-1000" style={{ width: `${analytics.shortlistRate}%` }} />
@@ -552,8 +552,8 @@ function RecruiterDashboardContent() {
                                 
                                 <div>
                                     <div className="flex justify-between text-sm mb-2">
-                                        <span className="font-semibold text-slate-700">Interview Rate</span>
-                                        <span className="font-bold text-indigo-600">{analytics.interviewRate}%</span>
+                                        <span className="font-semibold text-slate-700 dark:text-slate-50">Interview Rate</span>
+                                        <span className="font-bold text-indigo-600 dark:text-indigo-400">{analytics.interviewRate}%</span>
                                     </div>
                                     <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
                                         <div className="bg-indigo-500 h-full rounded-full transition-all duration-1000" style={{ width: `${analytics.interviewRate}%` }} />
@@ -562,8 +562,8 @@ function RecruiterDashboardContent() {
                                 
                                 <div>
                                     <div className="flex justify-between text-sm mb-2">
-                                        <span className="font-semibold text-slate-700">Offer Rate</span>
-                                        <span className="font-bold text-purple-600">{analytics.offerRate}%</span>
+                                        <span className="font-semibold text-slate-700 dark:text-slate-50">Offer Rate</span>
+                                        <span className="font-bold text-purple-600 dark:text-purple-400">{analytics.offerRate}%</span>
                                     </div>
                                     <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
                                         <div className="bg-purple-500 h-full rounded-full transition-all duration-1000" style={{ width: `${analytics.offerRate}%` }} />
@@ -572,8 +572,8 @@ function RecruiterDashboardContent() {
                                 
                                 <div>
                                     <div className="flex justify-between text-sm mb-2">
-                                        <span className="font-semibold text-slate-700">Rejection Rate</span>
-                                        <span className="font-bold text-red-600">{analytics.rejectionRate}%</span>
+                                        <span className="font-semibold text-slate-700 dark:text-slate-50">Rejection Rate</span>
+                                        <span className="font-bold text-red-600 dark:text-red-400">{analytics.rejectionRate}%</span>
                                     </div>
                                     <div className="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
                                         <div className="bg-red-500 h-full rounded-full transition-all duration-1000" style={{ width: `${analytics.rejectionRate}%` }} />
@@ -585,26 +585,26 @@ function RecruiterDashboardContent() {
                         {/* Applications management */}
                         <SectionCard title="All Applications" subtitle="Track candidate AI matching scores and progress" noPadding>
                             {applications.length === 0 ? (
-                                <p className="text-slate-500 italic text-center p-8">No applications yet.</p>
+                                <p className="text-slate-500 dark:text-slate-400 italic text-center p-8">No applications yet.</p>
                             ) : (
                                 <div className="overflow-x-auto">
                                     <table className="w-full text-sm">
-                                        <thead className="bg-slate-50/75 border-b border-slate-100">
+                                        <thead className="bg-slate-50/75 dark:bg-slate-800/75 border-b border-slate-100 dark:border-slate-700">
                                             <tr>
-                                                <th className="text-left p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Candidate</th>
-                                                <th className="text-left p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Skills</th>
-                                                <th className="text-left p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Job</th>
-                                                <th className="text-left p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">AI Score</th>
-                                                <th className="text-left p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
-                                                <th className="text-left p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Action</th>
+                                                <th className="text-left p-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Candidate</th>
+                                                <th className="text-left p-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Skills</th>
+                                                <th className="text-left p-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Job</th>
+                                                <th className="text-left p-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">AI Score</th>
+                                                <th className="text-left p-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
+                                                <th className="text-left p-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-slate-100">
                                             {applications.map((app) => (
-                                                <tr key={app.id} className="hover:bg-slate-50/70 transition-colors">
-                                                    <td className="p-4 font-bold text-slate-900">{app.candidate_name}</td>
-                                                    <td className="p-4 text-slate-600 max-w-[200px] truncate" title={app.skills}>{app.skills}</td>
-                                                    <td className="p-4 text-slate-700 font-medium">{app.job_title}</td>
+                                                <tr key={app.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-700/50 transition-colors">
+                                                    <td className="p-4 font-bold text-slate-900 dark:text-slate-50">{app.candidate_name}</td>
+                                                    <td className="p-4 text-slate-600 dark:text-slate-300 max-w-[200px] truncate" title={app.skills}>{app.skills}</td>
+                                                    <td className="p-4 text-slate-700 dark:text-slate-50 font-medium">{app.job_title}</td>
                                                     <td className="p-4">
                                                         <span className={`font-extrabold text-sm ${app.ai_score >= 80 ? "text-emerald-600" : app.ai_score >= 50 ? "text-amber-500" : "text-slate-400"}`}>
                                                             {app.ai_score}%
@@ -615,14 +615,14 @@ function RecruiterDashboardContent() {
                                                     </td>
                                                     <td className="p-4">
                                                         {app.recruiter_status === "Shortlisted" ? (
-                                                            <span className="text-emerald-600 font-semibold text-xs flex items-center gap-1">
+                                                            <span className="text-emerald-600 dark:text-green-400 font-semibold text-xs flex items-center gap-1">
                                                                 <UserCheck className="w-3.5 h-3.5" /> Shortlisted
                                                             </span>
                                                         ) : (
                                                             <div className="flex gap-2">
                                                                 <button
                                                                     onClick={() => shortlistCandidate(app.id, app.candidate_name, app.candidate_email)}
-                                                                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-emerald-600/10 cursor-pointer h-fit"
+                                                                    className="bg-emerald-600 dark:bg-green-700 dark:text-slate-50 hover:bg-emerald-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-emerald-600/10 cursor-pointer h-fit"
                                                                 >
                                                                     Shortlist
                                                                 </button>
@@ -631,7 +631,7 @@ function RecruiterDashboardContent() {
                                                                     <select
                                                                         value={selectedTemplate}
                                                                         onChange={(e) => setSelectedTemplate(e.target.value)}
-                                                                        className="text-xs border border-slate-200 rounded px-2 py-1 text-slate-600 outline-none focus:border-purple-400 bg-white"
+                                                                        className="text-xs border border-slate-200 dark:border-slate-700 rounded px-2 py-1 text-slate-600 dark:text-slate-300 outline-none focus:border-purple-400 bg-white dark:bg-slate-800"
                                                                     >
                                                                         <option value="corporate">Corporate</option>
                                                                         <option value="modern">Modern</option>

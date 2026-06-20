@@ -123,22 +123,22 @@ function InterviewsPageContent() {
                     ) : (
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm">
-                                <thead className="bg-slate-50/75 border-b border-slate-100">
+                                <thead className="bg-slate-50/75 dark:bg-slate-800/75 border-b border-slate-100 dark:border-slate-700">
                                     <tr>
-                                        <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Candidate</th>
-                                        <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
-                                        <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Date</th>
-                                        <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Time</th>
-                                        <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Platform</th>
-                                        <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Meet Link</th>
-                                        <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Action</th>
+                                        <th className="p-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Candidate</th>
+                                        <th className="p-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
+                                        <th className="p-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Date</th>
+                                        <th className="p-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Time</th>
+                                        <th className="p-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Platform</th>
+                                        <th className="p-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Meet Link</th>
+                                        <th className="p-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody className="divide-y divide-slate-100">
                                     {applications.map((app) => (
                                         <tr key={app.id} className="hover:bg-slate-50/50 transition-colors">
-                                            <td className="p-4 font-bold text-slate-900">
+                                            <td className="p-4 font-bold text-slate-900 dark:text-slate-50">
                                                 {app.candidate_name}
                                             </td>
 
@@ -160,7 +160,7 @@ function InterviewsPageContent() {
                                                         })
                                                     }
                                                     aria-label={`Interview date for ${app.candidate_name}`}
-                                                    className="border border-slate-200 p-2 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none text-xs"
+                                                    className="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 border border-slate-200 dark:border-slate-700 p-2 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 dark:focus:border-blue-400 outline-none text-xs"
                                                 />
                                             </td>
 
@@ -178,7 +178,7 @@ function InterviewsPageContent() {
                                                         })
                                                     }
                                                     aria-label={`Interview time for ${app.candidate_name}`}
-                                                    className="border border-slate-200 p-2 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none text-xs"
+                                                    className="border border-slate-200 dark:border-slate-700 p-2 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 dark:focus:border-blue-400 outline-none text-xs"
                                                 />
                                             </td>
 
@@ -195,7 +195,7 @@ function InterviewsPageContent() {
                                                         })
                                                     }
                                                     aria-label={`Interview platform for ${app.candidate_name}`}
-                                                    className="border border-slate-200 p-2 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none text-xs w-full max-w-[130px] bg-white"
+                                                    className="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 border border-slate-200 dark:border-slate-700 p-2 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 dark:focus:border-blue-400 outline-none text-xs w-full max-w-[130px]"
                                                 >
                                                     <option value="Google Meet">Google Meet</option>
                                                     <option value="Zoom">Zoom</option>
@@ -218,14 +218,14 @@ function InterviewsPageContent() {
                                                         })
                                                     }
                                                     aria-label={`Meeting link for ${app.candidate_name}`}
-                                                    className="border border-slate-200 p-2 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none text-xs w-full max-w-[180px]"
+                                                    className="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 border border-slate-200 dark:border-slate-700 p-2 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 dark:focus:border-blue-400 outline-none text-xs w-full max-w-[180px]"
                                                 />
                                             </td>
 
                                             <td className="p-4">
                                                 <button
                                                     onClick={() => scheduleInterview(app.id)}
-                                                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-emerald-600/10 cursor-pointer"
+                                                    className="bg-emerald-600 dark:bg-green-700 dark:text-slate-50 hover:bg-emerald-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-emerald-600/10 cursor-pointer"
                                                 >
                                                     Schedule
                                                 </button>

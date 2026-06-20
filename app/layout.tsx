@@ -14,23 +14,6 @@ export const metadata: Metadata = {
   description:
     'Promtal Jobs is an AI-powered recruitment platform that screens candidates instantly, eliminates bias, and matches the right talent with 95% accuracy.',
   generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
 }
 
 export const viewport: Viewport = {
@@ -48,7 +31,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`light bg-background ${geistSans.variable} ${geistMono.variable}`}
+      className={`bg-background ${geistSans.variable} ${geistMono.variable}`}
     >
       <body className="font-sans antialiased">
         <ToastProvider />

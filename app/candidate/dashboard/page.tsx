@@ -313,56 +313,56 @@ function CandidateDashboardContent() {
                     
                     {/* Header Section */}
                     <div>
-                        <h1 className="text-3xl font-bold text-slate-800 mb-2">Candidate Dashboard</h1>
-                        <p className="text-slate-500">Manage your profile, applications, interviews and offers</p>
-                        <div className="mt-6 bg-emerald-50 border border-emerald-100 rounded-xl p-6 shadow-sm">
-                            <h2 className="text-xl font-semibold text-emerald-800">
+                        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-50 mb-2">Candidate Dashboard</h1>
+                        <p className="text-slate-500 dark:text-slate-400">Manage your profile, applications, interviews and offers</p>
+                        <div className="mt-6 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800/50 rounded-xl p-6 shadow-sm">
+                            <h2 className="text-xl font-semibold text-emerald-800 dark:text-emerald-300">
                                 Welcome back, {candidateProfile?.candidate_name || "Candidate"}!
                             </h2>
-                            <p className="text-emerald-600 mt-1">Here is a summary of your recruitment journey.</p>
+                            <p className="text-emerald-600 dark:text-green-400 mt-1">Here is a summary of your recruitment journey.</p>
                         </div>
                     </div>
 
                     {/* Statistics Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div className="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition-transform duration-300 border border-slate-100">
+                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] p-6 hover:-translate-y-1 transition-transform duration-300 border border-slate-100 dark:border-slate-700">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="bg-emerald-100 p-3 rounded-lg">
-                                    <Briefcase className="w-6 h-6 text-emerald-600" />
+                                    <Briefcase className="w-6 h-6 text-emerald-600 dark:text-green-400" />
                                 </div>
-                                <span className="text-3xl font-bold text-slate-800">{applications.length}</span>
+                                <span className="text-3xl font-bold text-slate-800 dark:text-slate-50">{applications.length}</span>
                             </div>
-                            <h3 className="text-slate-500 font-medium">Applications Applied</h3>
+                            <h3 className="text-slate-500 dark:text-slate-400 font-medium">Applications Applied</h3>
                         </div>
 
-                        <div className="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition-transform duration-300 border border-slate-100">
+                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] p-6 hover:-translate-y-1 transition-transform duration-300 border border-slate-100 dark:border-slate-700">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="bg-orange-100 p-3 rounded-lg">
-                                    <CalendarDays className="w-6 h-6 text-orange-600" />
+                                    <CalendarDays className="w-6 h-6 text-orange-600 dark:text-orange-400" />
                                 </div>
-                                <span className="text-3xl font-bold text-slate-800">{interviews.length}</span>
+                                <span className="text-3xl font-bold text-slate-800 dark:text-slate-50">{interviews.length}</span>
                             </div>
-                            <h3 className="text-slate-500 font-medium">Interviews Scheduled</h3>
+                            <h3 className="text-slate-500 dark:text-slate-400 font-medium">Interviews Scheduled</h3>
                         </div>
 
-                        <div className="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition-transform duration-300 border border-slate-100">
+                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] p-6 hover:-translate-y-1 transition-transform duration-300 border border-slate-100 dark:border-slate-700">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="bg-purple-100 p-3 rounded-lg">
-                                    <FileBadge className="w-6 h-6 text-purple-600" />
+                                    <FileBadge className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                                 </div>
-                                <span className="text-3xl font-bold text-slate-800">{offers.length}</span>
+                                <span className="text-3xl font-bold text-slate-800 dark:text-slate-50">{offers.length}</span>
                             </div>
-                            <h3 className="text-slate-500 font-medium">Offers Received</h3>
+                            <h3 className="text-slate-500 dark:text-slate-400 font-medium">Offers Received</h3>
                         </div>
 
-                        <div className="bg-white rounded-xl shadow-lg p-6 hover:-translate-y-1 transition-transform duration-300 border border-slate-100">
+                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] p-6 hover:-translate-y-1 transition-transform duration-300 border border-slate-100 dark:border-slate-700">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="bg-blue-100 p-3 rounded-lg">
-                                    <TrendingUp className="w-6 h-6 text-blue-600" />
+                                    <TrendingUp className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                                 </div>
-                                <span className="text-3xl font-bold text-slate-800">{completionPercentage}%</span>
+                                <span className="text-3xl font-bold text-slate-800 dark:text-slate-50">{completionPercentage}%</span>
                             </div>
-                            <h3 className="text-slate-500 font-medium">Profile Completion</h3>
+                            <h3 className="text-slate-500 dark:text-slate-400 font-medium">Profile Completion</h3>
                             <div className="w-full bg-slate-100 rounded-full h-1.5 mt-3">
                                 <div className="bg-blue-500 h-1.5 rounded-full" style={{ width: `${completionPercentage}%` }}></div>
                             </div>
@@ -370,17 +370,17 @@ function CandidateDashboardContent() {
                     </div>
 
                     {/* Candidate Profile Overview */}
-                    <div className="bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden">
-                        <div className="border-b border-slate-100 p-6 flex justify-between items-center bg-slate-50/50">
+                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] border border-slate-100 dark:border-slate-700 overflow-hidden">
+                        <div className="border-b border-slate-100 dark:border-slate-700 p-6 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
                             <div className="flex items-center gap-3">
-                                <div className="bg-emerald-500 p-2 rounded-lg text-white shadow-md shadow-emerald-200">
+                                <div className="bg-emerald-500 p-2 rounded-lg text-white shadow-md dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] shadow-emerald-200">
                                     <User className="w-5 h-5" />
                                 </div>
-                                <h2 className="text-xl font-bold text-slate-800">Profile Overview</h2>
+                                <h2 className="text-xl font-bold text-slate-800 dark:text-slate-50">Profile Overview</h2>
                             </div>
                             <button
                                 onClick={() => setIsEditing(!isEditing)}
-                                className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-4 py-2 rounded-lg font-medium transition-colors"
+                                className="flex items-center gap-2 text-emerald-600 dark:text-green-400 hover:text-emerald-700 dark:hover:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/40 hover:bg-emerald-100 dark:hover:bg-emerald-800/60 px-4 py-2 rounded-lg font-medium transition-colors"
                             >
                                 {isEditing ? <X className="w-4 h-4" /> : <Pencil className="w-4 h-4" />}
                                 {isEditing ? "Cancel" : "Edit Profile"}
@@ -391,59 +391,59 @@ function CandidateDashboardContent() {
                             {isEditing ? (
                                 <div className="grid grid-cols-1 gap-6 max-w-3xl">
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-2">Candidate Name</label>
+                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-50 mb-2">Candidate Name</label>
                                         <input
                                             type="text"
                                             value={candidateName}
                                             onChange={(e) => setCandidateName(e.target.value)}
-                                            className="w-full border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+                                            className="w-full border border-slate-300 dark:border-slate-700 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-blue-400 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all dark:bg-slate-900"
                                             placeholder="John Doe"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-2">Skills</label>
+                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-50 mb-2">Skills</label>
                                         <textarea
                                             value={skills}
                                             onChange={(e) => setSkills(e.target.value)}
-                                            className="w-full border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all h-24"
+                                            className="w-full border border-slate-300 dark:border-slate-700 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-blue-400 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all h-24 dark:bg-slate-900"
                                             placeholder="React, TypeScript, Node.js"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-2">Education</label>
+                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-50 mb-2">Education</label>
                                         <textarea
                                             value={education}
                                             onChange={(e) => setEducation(e.target.value)}
-                                            className="w-full border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all h-24"
+                                            className="w-full border border-slate-300 dark:border-slate-700 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-blue-400 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all h-24 dark:bg-slate-900"
                                             placeholder="B.Sc. in Computer Science"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-2">Experience</label>
+                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-50 mb-2">Experience</label>
                                         <textarea
                                             value={experience}
                                             onChange={(e) => setExperience(e.target.value)}
-                                            className="w-full border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all h-24"
+                                            className="w-full border border-slate-300 dark:border-slate-700 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-blue-400 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all h-24 dark:bg-slate-900"
                                             placeholder="3 years at TechCorp"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-2">Upload Resume (PDF)</label>
+                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-50 mb-2">Upload Resume (PDF)</label>
                                         <input
                                             type="file"
                                             accept=".pdf"
                                             onChange={(e) =>
                                                 setResumeFile(e.target.files?.[0] || null)
                                             }
-                                            className="w-full border border-slate-300 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+                                            className="w-full border border-slate-300 dark:border-slate-700 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-blue-400 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all dark:bg-slate-900"
                                         />
                                         {resumeFile && (
-                                            <p className="text-sm text-emerald-600 mt-2 font-medium">
+                                            <p className="text-sm text-emerald-600 dark:text-green-400 mt-2 font-medium">
                                                 Selected: {resumeFile.name}
                                             </p>
                                         )}
                                         {resumeUrl && !resumeFile && (
-                                            <p className="text-sm text-slate-500 mt-2">
+                                            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
                                                 Current resume on file
                                             </p>
                                         )}
@@ -459,7 +459,7 @@ function CandidateDashboardContent() {
                                     <div>
                                         <button
                                             onClick={handleSaveProfile}
-                                            className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all"
+                                            className="bg-emerald-600 dark:bg-green-700 dark:text-slate-50 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-700 shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] shadow-emerald-200 transition-all"
                                         >
                                             Save Profile Changes
                                         </button>
@@ -468,37 +468,37 @@ function CandidateDashboardContent() {
                             ) : (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div>
-                                        <h3 className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-1">Full Name</h3>
-                                        <p className="text-lg font-semibold text-slate-800">{candidateProfile?.candidate_name || "Not specified"}</p>
+                                        <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Full Name</h3>
+                                        <p className="text-lg font-semibold text-slate-800 dark:text-slate-50">{candidateProfile?.candidate_name || "Not specified"}</p>
                                     </div>
                                     <div>
-                                        <h3 className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-1">Resume Link</h3>
+                                        <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Resume Link</h3>
                                         {candidateProfile?.resume_url ? (
-                                            <a href={candidateProfile.resume_url} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-medium">
+                                            <a href={candidateProfile.resume_url} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-emerald-600 dark:text-green-400 hover:text-emerald-700 font-medium">
                                                 <ExternalLink className="w-4 h-4" />
                                                 View Resume
                                             </a>
                                         ) : (
-                                            <p className="text-slate-400 italic">Not specified</p>
+                                            <p className="text-slate-400 dark:text-slate-400 italic">Not specified</p>
                                         )}
                                     </div>
                                     <div className="md:col-span-2">
-                                        <h3 className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-1">Skills</h3>
+                                        <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Skills</h3>
                                         <div className="flex flex-wrap gap-2 mt-2">
                                             {candidateProfile?.skills ? candidateProfile.skills.split(',').map((skill: string, idx: number) => (
-                                                <span key={idx} className="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm font-medium">
+                                                <span key={idx} className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-50 px-3 py-1 rounded-full text-sm font-medium">
                                                     {skill.trim()}
                                                 </span>
-                                            )) : <p className="text-slate-400 italic">Not specified</p>}
+                                            )) : <p className="text-slate-400 dark:text-slate-400 italic">Not specified</p>}
                                         </div>
                                     </div>
                                     <div className="md:col-span-2">
-                                        <h3 className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-1">Experience</h3>
-                                        <p className="text-slate-700 whitespace-pre-wrap">{candidateProfile?.experience || <span className="text-slate-400 italic">Not specified</span>}</p>
+                                        <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Experience</h3>
+                                        <p className="text-slate-700 dark:text-slate-50 whitespace-pre-wrap">{candidateProfile?.experience || <span className="text-slate-400 dark:text-slate-400 italic">Not specified</span>}</p>
                                     </div>
                                     <div className="md:col-span-2">
-                                        <h3 className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-1">Education</h3>
-                                        <p className="text-slate-700 whitespace-pre-wrap">{candidateProfile?.education || <span className="text-slate-400 italic">Not specified</span>}</p>
+                                        <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Education</h3>
+                                        <p className="text-slate-700 dark:text-slate-50 whitespace-pre-wrap">{candidateProfile?.education || <span className="text-slate-400 dark:text-slate-400 italic">Not specified</span>}</p>
                                     </div>
                                 </div>
                             )}
@@ -507,35 +507,35 @@ function CandidateDashboardContent() {
 
                     {/* Applications Section */}
                     <div>
-                        <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                            <FileText className="w-6 h-6 text-emerald-600" />
+                        <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-50 mb-6 flex items-center gap-2">
+                            <FileText className="w-6 h-6 text-emerald-600 dark:text-green-400" />
                             My Applications
                         </h2>
                         {applications.length === 0 ? (
-                            <div className="bg-white rounded-xl shadow p-12 text-center border border-slate-100 flex flex-col items-center">
-                                <div className="bg-slate-50 p-4 rounded-full mb-4">
+                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow p-12 text-center border border-slate-100 dark:border-slate-700 flex flex-col items-center">
+                                <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-full mb-4">
                                     <Briefcase className="w-10 h-10 text-slate-300" />
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-700 mb-2">No Applications Yet</h3>
-                                <p className="text-slate-500">Explore our jobs board to find your next great opportunity.</p>
+                                <h3 className="text-xl font-bold text-slate-700 dark:text-slate-50 mb-2">No Applications Yet</h3>
+                                <p className="text-slate-500 dark:text-slate-400">Explore our jobs board to find your next great opportunity.</p>
                             </div>
                         ) : (
-                            <div className="bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden">
+                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] border border-slate-100 dark:border-slate-700 overflow-hidden">
                                 <div className="overflow-x-auto">
                                     <table className="w-full">
-                                        <thead className="bg-slate-50 border-b border-slate-100">
+                                        <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-700">
                                             <tr>
-                                                <th className="text-left p-4 text-sm font-semibold text-slate-600">Job Title</th>
-                                                <th className="text-left p-4 text-sm font-semibold text-slate-600">Date Applied</th>
-                                                <th className="text-left p-4 text-sm font-semibold text-slate-600">AI Match Score</th>
-                                                <th className="text-left p-4 text-sm font-semibold text-slate-600">Status</th>
+                                                <th className="text-left p-4 text-sm font-semibold text-slate-600 dark:text-slate-300">Job Title</th>
+                                                <th className="text-left p-4 text-sm font-semibold text-slate-600 dark:text-slate-300">Date Applied</th>
+                                                <th className="text-left p-4 text-sm font-semibold text-slate-600 dark:text-slate-300">AI Match Score</th>
+                                                <th className="text-left p-4 text-sm font-semibold text-slate-600 dark:text-slate-300">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-slate-100">
                                             {applications.map((app) => (
                                                 <tr key={app.id} className="hover:bg-slate-50/50 transition-colors">
-                                                    <td className="p-4 font-medium text-slate-800">{app.job_title}</td>
-                                                    <td className="p-4 text-slate-600">
+                                                    <td className="p-4 font-medium text-slate-800 dark:text-slate-50">{app.job_title}</td>
+                                                    <td className="p-4 text-slate-600 dark:text-slate-300">
                                                         {app.created_at ? new Date(app.created_at).toLocaleDateString() : 'N/A'}
                                                     </td>
                                                     <td className="p-4">
@@ -557,52 +557,52 @@ function CandidateDashboardContent() {
 
                     {/* Interviews Section */}
                     <div>
-                        <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                            <CalendarDays className="w-6 h-6 text-emerald-600" />
+                        <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-50 mb-6 flex items-center gap-2">
+                            <CalendarDays className="w-6 h-6 text-emerald-600 dark:text-green-400" />
                             Scheduled Interviews
                         </h2>
                         {interviews.length === 0 ? (
-                            <div className="bg-white rounded-xl shadow p-12 text-center border border-slate-100 flex flex-col items-center">
-                                <div className="bg-slate-50 p-4 rounded-full mb-4">
+                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow p-12 text-center border border-slate-100 dark:border-slate-700 flex flex-col items-center">
+                                <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-full mb-4">
                                     <CalendarDays className="w-10 h-10 text-slate-300" />
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-700 mb-2">No Interviews Scheduled</h3>
-                                <p className="text-slate-500">When recruiters schedule an interview, it will appear here.</p>
+                                <h3 className="text-xl font-bold text-slate-700 dark:text-slate-50 mb-2">No Interviews Scheduled</h3>
+                                <p className="text-slate-500 dark:text-slate-400">When recruiters schedule an interview, it will appear here.</p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {interviews.map((interview) => (
-                                    <div key={interview.id} className="bg-white rounded-xl shadow-lg border border-slate-100 p-6 flex flex-col h-full">
+                                    <div key={interview.id} className="bg-white dark:bg-slate-800 rounded-xl shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] border border-slate-100 dark:border-slate-700 p-6 flex flex-col h-full">
                                         <div className="flex justify-between items-start mb-4">
-                                            <div className="bg-orange-50 p-2 rounded-lg">
-                                                <CalendarDays className="w-6 h-6 text-orange-600" />
+                                            <div className="bg-orange-50 dark:bg-orange-900/30 p-2 rounded-lg">
+                                                <CalendarDays className="w-6 h-6 text-orange-600 dark:text-orange-400" />
                                             </div>
-                                            <span className="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full text-xs font-semibold">
+                                            <span className="bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-full text-xs font-semibold">
                                                 {interview.status || "Scheduled"}
                                             </span>
                                         </div>
                                         <div className="space-y-3 flex-grow">
                                             <div>
-                                                <p className="text-sm text-slate-500">Date & Time</p>
-                                                <p className="font-semibold text-slate-800">
+                                                <p className="text-sm text-slate-500 dark:text-slate-400">Date & Time</p>
+                                                <p className="font-semibold text-slate-800 dark:text-slate-50">
                                                     {interview.interview_date} at {interview.interview_time}
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="mt-6 pt-4 border-t border-slate-100">
+                                        <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700">
                                             <div className="mb-3">
                                                 {interview.platform === "Google Meet" && (
-                                                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                                                    <span className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 px-3 py-1 rounded-full text-sm font-medium">
                                                         🟢 Google Meet
                                                     </span>
                                                 )}
                                                 {interview.platform === "Zoom" && (
-                                                    <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                                                    <span className="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-full text-sm font-medium">
                                                         🔵 Zoom
                                                     </span>
                                                 )}
                                                 {interview.platform === "Microsoft Teams" && (
-                                                    <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
+                                                    <span className="bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-400 px-3 py-1 rounded-full text-sm font-medium">
                                                         🟣 Microsoft Teams
                                                     </span>
                                                 )}
@@ -612,13 +612,13 @@ function CandidateDashboardContent() {
                                                     href={interview.meeting_link} 
                                                     target="_blank" 
                                                     rel="noreferrer"
-                                                    className="w-full flex items-center justify-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-emerald-700 transition-colors"
+                                                    className="w-full flex items-center justify-center gap-2 bg-emerald-600 dark:bg-green-700 dark:text-slate-50 text-white px-4 py-2 rounded-lg font-medium hover:bg-emerald-700 transition-colors"
                                                 >
                                                     <ExternalLink className="w-4 h-4" />
                                                     Join Interview
                                                 </a>
                                             ) : (
-                                                <button disabled className="w-full flex items-center justify-center gap-2 bg-slate-100 text-slate-400 px-4 py-2 rounded-lg font-medium cursor-not-allowed">
+                                                <button disabled className="w-full flex items-center justify-center gap-2 bg-slate-100 text-slate-400 dark:text-slate-400 px-4 py-2 rounded-lg font-medium cursor-not-allowed">
                                                     Link Not Available
                                                 </button>
                                             )}
@@ -631,39 +631,39 @@ function CandidateDashboardContent() {
 
                     {/* Offer Letters Section */}
                     <div>
-                        <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                            <FileBadge className="w-6 h-6 text-emerald-600" />
+                        <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-50 mb-6 flex items-center gap-2">
+                            <FileBadge className="w-6 h-6 text-emerald-600 dark:text-green-400" />
                             Offer Letters
                         </h2>
                         {offers.length === 0 ? (
-                            <div className="bg-white rounded-xl shadow p-12 text-center border border-slate-100 flex flex-col items-center">
-                                <div className="bg-slate-50 p-4 rounded-full mb-4">
+                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow p-12 text-center border border-slate-100 dark:border-slate-700 flex flex-col items-center">
+                                <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-full mb-4">
                                     <FileBadge className="w-10 h-10 text-slate-300" />
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-700 mb-2">No Offers Available</h3>
-                                <p className="text-slate-500">Your future offer letters will be displayed securely right here.</p>
+                                <h3 className="text-xl font-bold text-slate-700 dark:text-slate-50 mb-2">No Offers Available</h3>
+                                <p className="text-slate-500 dark:text-slate-400">Your future offer letters will be displayed securely right here.</p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {offers.map((offer) => (
-                                    <div key={offer.id} className="bg-white rounded-xl shadow-lg border border-slate-100 p-6 flex flex-col h-full relative overflow-hidden">
-                                        <div className="absolute top-0 right-0 w-20 h-20 bg-purple-50 rounded-bl-full -z-10"></div>
+                                    <div key={offer.id} className="bg-white dark:bg-slate-800 rounded-xl shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] border border-slate-100 dark:border-slate-700 p-6 flex flex-col h-full relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 w-20 h-20 bg-purple-50 dark:bg-purple-900/20 rounded-bl-full -z-10"></div>
                                         <div className="flex justify-between items-start mb-4">
-                                            <div className="bg-purple-100 p-3 rounded-xl">
-                                                <FileBadge className="w-6 h-6 text-purple-600" />
+                                            <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-xl">
+                                                <FileBadge className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                                             </div>
-                                            <span className="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full text-xs font-semibold">
+                                            <span className="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-green-400 px-2.5 py-1 rounded-full text-xs font-semibold">
                                                 {offer.status || "Generated"}
                                             </span>
                                         </div>
                                         <div className="space-y-1 flex-grow mb-6">
-                                            <h3 className="text-lg font-bold text-slate-800">{offer.job_title}</h3>
-                                            <p className="text-slate-600 font-medium">{offer.company_name}</p>
-                                            <p className="text-sm text-slate-500 pt-2">Offer Date: {offer.offer_date}</p>
+                                            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-50">{offer.job_title}</h3>
+                                            <p className="text-slate-600 dark:text-slate-300 font-medium">{offer.company_name}</p>
+                                            <p className="text-sm text-slate-500 dark:text-slate-400 pt-2">Offer Date: {offer.offer_date}</p>
                                         </div>
                                         <button 
                                             onClick={() => setSelectedOffer(offer)}
-                                            className="w-full bg-slate-900 text-white px-4 py-2.5 rounded-lg font-medium hover:bg-slate-800 transition-colors shadow-md shadow-slate-200"
+                                            className="w-full bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-slate-50 text-white px-4 py-2.5 rounded-lg font-medium hover:bg-slate-800 transition-colors shadow-md shadow-slate-200 dark:shadow-none"
                                         >
                                             View Offer Letter
                                         </button>
@@ -679,25 +679,25 @@ function CandidateDashboardContent() {
             {/* Offer Modal */}
             {selectedOffer && (
                 <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
-                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-                        <div className="bg-slate-50 border-b border-slate-100 p-6 flex justify-between items-center">
+                    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-700 p-6 flex justify-between items-center">
                             <div className="flex items-center gap-3">
-                                <div className="bg-purple-100 p-2 rounded-lg text-purple-600">
+                                <div className="bg-purple-100 p-2 rounded-lg text-purple-600 dark:text-purple-400">
                                     <FileBadge className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-slate-800">Official Offer Letter</h3>
-                                    <p className="text-sm text-slate-500">{selectedOffer.company_name}</p>
+                                    <h3 className="text-xl font-bold text-slate-800 dark:text-slate-50">Official Offer Letter</h3>
+                                    <p className="text-sm text-slate-500 dark:text-slate-400">{selectedOffer.company_name}</p>
                                 </div>
                             </div>
                             <button 
                                 onClick={() => setSelectedOffer(null)}
-                                className="text-slate-400 hover:text-slate-600 bg-white hover:bg-slate-100 p-2 rounded-full transition-colors"
+                                className="text-slate-400 dark:text-slate-400 hover:text-slate-600 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-full transition-colors"
                             >
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
-                        <div className="p-8 font-serif leading-relaxed text-slate-800 space-y-6">
+                        <div className="p-8 font-serif leading-relaxed text-slate-800 dark:text-slate-50 space-y-6">
                             <p>Dear {selectedOffer.candidate_name},</p>
                             
                             <p>We are pleased to offer you the position of <strong>{selectedOffer.job_title}</strong> at <strong>{selectedOffer.company_name}</strong>.</p>
@@ -706,18 +706,18 @@ function CandidateDashboardContent() {
                             
                             <div className="pt-8">
                                 <p className="mb-1">Sincerely,</p>
-                                <p className="font-bold text-emerald-700">HR Team</p>
-                                <p className="text-sm text-slate-500">{selectedOffer.company_name}</p>
+                                <p className="font-bold text-emerald-700 dark:text-green-400">HR Team</p>
+                                <p className="text-sm text-slate-500 dark:text-slate-400">{selectedOffer.company_name}</p>
                             </div>
                         </div>
-                        <div className="bg-slate-50 border-t border-slate-100 p-6 flex justify-end gap-3">
+                        <div className="bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 p-6 flex justify-end gap-3">
                             <button 
                                 onClick={() => setSelectedOffer(null)}
-                                className="px-6 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition-colors"
+                                className="px-6 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-50 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                             >
                                 Close
                             </button>
-                            <button className="px-6 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors shadow-md shadow-emerald-200">
+                            <button className="px-6 py-2 bg-emerald-600 dark:bg-green-700 dark:text-slate-50 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors shadow-md dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] shadow-emerald-200">
                                 Accept Offer
                             </button>
                         </div>

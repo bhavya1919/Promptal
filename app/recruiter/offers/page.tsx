@@ -103,11 +103,11 @@ function OffersPageContent() {
             Offer Letter Generation
         </h1>
 
-        <div className="bg-white rounded-2xl shadow overflow-hidden">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow overflow-hidden">
 
             <table className="w-full">
 
-                <thead className="bg-slate-100">
+                <thead className="bg-slate-100 dark:bg-slate-800/75 border-b border-slate-100 dark:border-slate-700">
                     <tr>
                         <th className="p-4 text-left">
                             Candidate
@@ -125,7 +125,7 @@ function OffersPageContent() {
                     {candidates.map((candidate) => (
                         <tr
                             key={candidate.application_id}
-                            className="border-b"
+                            className="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50/70 dark:hover:bg-slate-700/50 transition-colors"
                         >
                             <td className="p-4">
                                 {candidate.candidate_name}
@@ -144,7 +144,7 @@ function OffersPageContent() {
                                             candidate.job_title
                                         )
                                     }
-                                    className="bg-emerald-600 text-white px-4 py-2 rounded"
+                                    className="bg-emerald-600 dark:bg-green-700 dark:text-slate-50 text-white px-4 py-2 rounded"
                                 >
                                     Generate Offer
                                 </button>

@@ -337,7 +337,7 @@ function ApplicationsPageContent() {
             </h1>
             <div className="flex flex-col items-end">
                 <div className="flex gap-3">
-                    <label className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow transition-colors cursor-pointer flex items-center justify-center">
+                    <label className="bg-emerald-600 dark:bg-green-700 dark:text-slate-50 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow transition-colors cursor-pointer flex items-center justify-center">
                         Import CSV
                         <input
                             type="file"
@@ -359,7 +359,7 @@ function ApplicationsPageContent() {
                 </div>
                 {csvFile && (
                     <div className="flex flex-col items-end">
-                        <p className="text-sm text-emerald-600 mt-2 font-medium">
+                        <p className="text-sm text-emerald-600 dark:text-green-400 mt-2 font-medium">
                             Selected: {csvFile.name}
                         </p>
                         <div className="flex gap-2">
@@ -371,7 +371,7 @@ function ApplicationsPageContent() {
                             </button>
                             <button
                                 onClick={importCSV}
-                                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg mt-2 text-sm font-semibold shadow transition-colors"
+                                className="bg-emerald-600 dark:bg-green-700 dark:text-slate-50 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg mt-2 text-sm font-semibold shadow transition-colors"
                             >
                                 Import Candidates
                             </button>
@@ -380,10 +380,10 @@ function ApplicationsPageContent() {
                 )}
                 {csvData.length > 0 && (
                     <div className="mt-4 text-left w-full max-w-sm">
-                        <h3 className="font-semibold text-slate-800 mb-2">
+                        <h3 className="font-semibold text-slate-800 dark:text-slate-50 mb-2">
                             CSV Preview
                         </h3>
-                        <pre className="bg-slate-100 p-4 rounded-xl text-xs text-slate-700 overflow-x-auto border border-slate-200">
+                        <pre className="bg-slate-100 p-4 rounded-xl text-xs text-slate-700 dark:text-slate-50 overflow-x-auto border border-slate-200 dark:border-slate-700">
                             {JSON.stringify(csvData.slice(0, 5), null, 2)}
                         </pre>
                     </div>
@@ -392,8 +392,8 @@ function ApplicationsPageContent() {
         </div>
 
         {loading ? (
-            <div className="bg-white rounded-2xl shadow overflow-hidden">
-                <div className="p-4 border-b bg-slate-50 flex gap-4 animate-pulse">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow overflow-hidden">
+                <div className="p-4 border-b bg-slate-50 dark:bg-slate-900 flex gap-4 animate-pulse">
                     <div className="h-4 bg-slate-200 rounded w-1/6"></div>
                     <div className="h-4 bg-slate-200 rounded w-1/4"></div>
                     <div className="h-4 bg-slate-200 rounded w-1/4"></div>
@@ -409,21 +409,21 @@ function ApplicationsPageContent() {
                 ))}
             </div>
         ) : applications.length === 0 ? (
-            <div className="bg-white rounded-2xl shadow p-12 text-center border border-slate-100 flex flex-col items-center">
-                <div className="bg-slate-50 p-4 rounded-full mb-4">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow p-12 text-center border border-slate-100 dark:border-slate-700 flex flex-col items-center">
+                <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-full mb-4">
                     <svg className="w-10 h-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                 </div>
-                <h3 className="text-xl font-bold text-slate-700 mb-2">No Applications Found</h3>
-                <p className="text-slate-500">There are currently no applications submitted by candidates.</p>
+                <h3 className="text-xl font-bold text-slate-700 dark:text-slate-50 mb-2">No Applications Found</h3>
+                <p className="text-slate-500 dark:text-slate-400">There are currently no applications submitted by candidates.</p>
             </div>
         ) : (
-            <div className="bg-white rounded-2xl shadow overflow-hidden">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow overflow-hidden">
 
                 <table className="w-full">
 
-                    <thead className="bg-slate-100">
+                    <thead className="bg-slate-100 dark:bg-slate-800/75 border-b border-slate-100 dark:border-slate-700">
                         <tr>
                             <th className="text-left p-4">
                                 Candidate
@@ -453,16 +453,16 @@ function ApplicationsPageContent() {
                         {applications.map((app) => (
                             <tr
                                 key={app.id}
-                                className="border-b"
+                                className="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50/70 dark:hover:bg-slate-700/50 transition-colors"
                             >
                                 <td className="p-4">
-                                    <div className="font-semibold text-slate-800">
+                                    <div className="font-semibold text-slate-800 dark:text-slate-50">
                                         {app.candidate_name}
                                     </div>
                                     <div className="mt-2 flex items-center gap-2">
                                         <button
                                             onClick={() => setSelectedApp(app)}
-                                            className="inline-block bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm transition-all"
+                                            className="inline-block bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-transparent dark:border-slate-700 text-slate-700 dark:text-slate-50 px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm transition-all"
                                         >
                                             View Details
                                         </button>
@@ -488,7 +488,7 @@ function ApplicationsPageContent() {
                                 </td>
 
                                 <td className="p-4">
-                                    <span className="font-bold text-emerald-600">
+                                    <span className="font-bold text-emerald-600 dark:text-green-400">
                                         {app.ai_score}%
                                     </span>
                                 </td>
@@ -507,7 +507,7 @@ function ApplicationsPageContent() {
                                             {app.offer_status}
                                         </span>
                                     ) : (
-                                        <span className="text-slate-400 italic text-xs">No Offer</span>
+                                        <span className="text-slate-400 dark:text-slate-400 italic text-xs">No Offer</span>
                                     )}
                                 </td>
 
@@ -532,7 +532,7 @@ function ApplicationsPageContent() {
                                                             "Shortlisted"
                                                         )
                                                     }
-                                                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                                    className="bg-emerald-600 dark:bg-green-700 dark:text-slate-50 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
                                                 >
                                                     Shortlist
                                                 </button>
@@ -567,7 +567,7 @@ function ApplicationsPageContent() {
                                                 <select
                                                     value={selectedTemplate}
                                                     onChange={(e) => setSelectedTemplate(e.target.value)}
-                                                    className="text-xs border border-slate-200 rounded px-2 py-1 text-slate-600 outline-none focus:border-purple-400 bg-white"
+                                                    className="text-xs border border-slate-200 dark:border-slate-700 rounded px-2 py-1 text-slate-600 dark:text-slate-300 outline-none focus:border-purple-400 bg-white dark:bg-slate-800"
                                                 >
                                                     <option value="corporate">Corporate</option>
                                                     <option value="modern">Modern</option>
@@ -618,15 +618,15 @@ function ApplicationsPageContent() {
     {/* Application Details Modal */}
     {selectedApp && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
-                <div className="bg-slate-50 border-b border-slate-100 p-6 flex justify-between items-center shrink-0">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
+                <div className="bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-700 p-6 flex justify-between items-center shrink-0">
                     <div>
-                        <h3 className="text-xl font-bold text-slate-800">Candidate Profile</h3>
-                        <p className="text-sm text-slate-500">Full application details</p>
+                        <h3 className="text-xl font-bold text-slate-800 dark:text-slate-50">Candidate Profile</h3>
+                        <p className="text-sm text-slate-500 dark:text-slate-400">Full application details</p>
                     </div>
                     <button 
                         onClick={() => setSelectedApp(null)}
-                        className="text-slate-400 hover:text-slate-600 bg-white hover:bg-slate-100 p-2 rounded-full transition-colors"
+                        className="text-slate-400 dark:text-slate-400 hover:text-slate-600 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-full transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -635,27 +635,27 @@ function ApplicationsPageContent() {
                 <div className="p-6 overflow-y-auto space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Name</p>
-                            <p className="font-medium text-slate-800">{selectedApp.candidate_name}</p>
+                            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Name</p>
+                            <p className="font-medium text-slate-800 dark:text-slate-50">{selectedApp.candidate_name}</p>
                         </div>
                         <div>
-                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Email</p>
-                            <p className="font-medium text-slate-800">{selectedApp.candidate_email}</p>
+                            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Email</p>
+                            <p className="font-medium text-slate-800 dark:text-slate-50">{selectedApp.candidate_email}</p>
                         </div>
                     </div>
 
                     <div>
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Applied Date</p>
-                        <p className="font-medium text-slate-800">{new Date(selectedApp.created_at).toLocaleDateString()}</p>
+                        <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Applied Date</p>
+                        <p className="font-medium text-slate-800 dark:text-slate-50">{new Date(selectedApp.created_at).toLocaleDateString()}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">AI Match Score</p>
-                            <p className="text-2xl font-bold text-emerald-600">{selectedApp.ai_score}%</p>
+                        <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
+                            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">AI Match Score</p>
+                            <p className="text-2xl font-bold text-emerald-600 dark:text-green-400">{selectedApp.ai_score}%</p>
                         </div>
-                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Application Status</p>
+                        <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
+                            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Application Status</p>
                             <div className="mt-1">
                                 <StatusBadge status={selectedApp.recruiter_status} />
                             </div>
@@ -663,50 +663,50 @@ function ApplicationsPageContent() {
                     </div>
 
                     <div>
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Skills</p>
+                        <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Skills</p>
                         <div className="flex flex-wrap gap-2">
                             {selectedApp.skills ? selectedApp.skills.split(',').map((skill, idx) => (
-                                <span key={idx} className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold border border-blue-100">
+                                <span key={idx} className="bg-blue-50 text-blue-700 dark:text-blue-400 px-3 py-1 rounded-full text-xs font-semibold border border-blue-100">
                                     {skill.trim()}
                                 </span>
-                            )) : <p className="text-slate-400 italic text-sm">No skills specified</p>}
+                            )) : <p className="text-slate-400 dark:text-slate-400 italic text-sm">No skills specified</p>}
                         </div>
                     </div>
 
                     <div>
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Education</p>
-                        <p className="text-sm text-slate-700 whitespace-pre-wrap">{selectedApp.education || <span className="text-slate-400 italic">Not specified</span>}</p>
+                        <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Education</p>
+                        <p className="text-sm text-slate-700 dark:text-slate-50 whitespace-pre-wrap">{selectedApp.education || <span className="text-slate-400 dark:text-slate-400 italic">Not specified</span>}</p>
                     </div>
 
                     <div>
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Experience</p>
-                        <p className="text-sm text-slate-700 whitespace-pre-wrap">{selectedApp.experience || <span className="text-slate-400 italic">Not specified</span>}</p>
+                        <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Experience</p>
+                        <p className="text-sm text-slate-700 dark:text-slate-50 whitespace-pre-wrap">{selectedApp.experience || <span className="text-slate-400 dark:text-slate-400 italic">Not specified</span>}</p>
                     </div>
                 </div>
 
-                <div className="px-6 pb-6 border-t border-slate-100 pt-6">
-                    <h3 className="text-lg font-bold text-slate-800 mb-4">Reference Check</h3>
+                <div className="px-6 pb-6 border-t border-slate-100 dark:border-slate-700 pt-6">
+                    <h3 className="text-lg font-bold text-slate-800 dark:text-slate-50 mb-4">Reference Check</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <input
-                            className="w-full border border-slate-300 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-sm transition-all"
+                            className="w-full border border-slate-300 dark:border-slate-700 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-blue-400 outline-none text-sm transition-all dark:bg-slate-900"
                             placeholder="Reference Name"
                             value={referenceName}
                             onChange={(e) => setReferenceName(e.target.value)}
                         />
                         <input
-                            className="w-full border border-slate-300 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-sm transition-all"
+                            className="w-full border border-slate-300 dark:border-slate-700 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-blue-400 outline-none text-sm transition-all dark:bg-slate-900"
                             placeholder="Company"
                             value={referenceCompany}
                             onChange={(e) => setReferenceCompany(e.target.value)}
                         />
                         <input
-                            className="w-full border border-slate-300 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-sm transition-all"
+                            className="w-full border border-slate-300 dark:border-slate-700 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-blue-400 outline-none text-sm transition-all dark:bg-slate-900"
                             placeholder="Email"
                             value={referenceEmail}
                             onChange={(e) => setReferenceEmail(e.target.value)}
                         />
                         <input
-                            className="w-full border border-slate-300 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-sm transition-all"
+                            className="w-full border border-slate-300 dark:border-slate-700 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-blue-400 outline-none text-sm transition-all dark:bg-slate-900"
                             placeholder="Phone"
                             value={referencePhone}
                             onChange={(e) => setReferencePhone(e.target.value)}
@@ -714,13 +714,13 @@ function ApplicationsPageContent() {
                     </div>
                     <button
                         onClick={() => addReferenceCheck(selectedApp.id)}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg text-sm font-semibold shadow hover:shadow-md transition-all w-full md:w-auto"
+                        className="bg-emerald-600 dark:bg-green-700 dark:text-slate-50 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg text-sm font-semibold shadow hover:shadow-md transition-all w-full md:w-auto"
                     >
                         Add Reference
                     </button>
                 </div>
 
-                <div className="bg-slate-50 border-t border-slate-100 p-6 flex justify-between items-center shrink-0">
+                <div className="bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 p-6 flex justify-between items-center shrink-0">
                     {selectedApp.resume_url ? (
                         <a 
                             href={selectedApp.resume_url}
@@ -731,11 +731,11 @@ function ApplicationsPageContent() {
                             View Resume
                         </a>
                     ) : (
-                        <p className="text-slate-500 text-sm italic">No resume provided</p>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm italic">No resume provided</p>
                     )}
                     <button 
                         onClick={() => setSelectedApp(null)}
-                        className="px-5 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition-colors shadow-sm"
+                        className="px-5 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-50 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm"
                     >
                         Close
                     </button>

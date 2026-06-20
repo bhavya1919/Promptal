@@ -77,7 +77,7 @@ function NewJobPageContent() {
                 <div className="flex items-center gap-2">
                     <Link 
                         href="/recruiter/dashboard"
-                        className="inline-flex items-center gap-1.5 text-slate-500 hover:text-emerald-600 text-sm font-semibold transition-colors"
+                        className="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400 hover:text-emerald-600 text-sm font-semibold transition-colors"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         Back to Dashboard
@@ -94,17 +94,17 @@ function NewJobPageContent() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Job Title */}
                             <div className="space-y-1.5 md:col-span-2">
-                                <label htmlFor="job-title" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                <label htmlFor="job-title" className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider block">
                                     Job Title
                                 </label>
                                 <div className="relative">
-                                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 h-5 w-5" />
                                     <input
                                         id="job-title"
                                         type="text"
                                         required
                                         placeholder="e.g., Senior Full-Stack Engineer"
-                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
                                     />
@@ -113,14 +113,14 @@ function NewJobPageContent() {
 
                             {/* Job Type */}
                             <div className="space-y-1.5">
-                                <label htmlFor="job-type" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                <label htmlFor="job-type" className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider block">
                                     Job Type
                                 </label>
                                 <div className="relative">
-                                    <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 h-5 w-5" />
                                     <select
                                         id="job-type"
-                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all appearance-none bg-white cursor-pointer"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all appearance-none bg-white dark:bg-slate-800 cursor-pointer"
                                         value={jobType}
                                         onChange={(e) => setJobType(e.target.value)}
                                     >
@@ -134,17 +134,17 @@ function NewJobPageContent() {
 
                             {/* Location */}
                             <div className="space-y-1.5">
-                                <label htmlFor="location" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                <label htmlFor="location" className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider block">
                                     Location
                                 </label>
                                 <div className="relative">
-                                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 h-5 w-5" />
                                     <input
                                         id="location"
                                         type="text"
                                         required
                                         placeholder="e.g., Remote / San Francisco, CA"
-                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all"
                                         value={location}
                                         onChange={(e) => setLocation(e.target.value)}
                                     />
@@ -153,17 +153,17 @@ function NewJobPageContent() {
 
                             {/* Salary Range */}
                             <div className="space-y-1.5">
-                                <label htmlFor="salary" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                <label htmlFor="salary" className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider block">
                                     Salary Range
                                 </label>
                                 <div className="relative">
-                                    <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 h-5 w-5" />
                                     <input
                                         id="salary"
                                         type="text"
                                         required
                                         placeholder="e.g., $120,000 - $150,000"
-                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all"
                                         value={salaryRange}
                                         onChange={(e) => setSalaryRange(e.target.value)}
                                     />
@@ -172,17 +172,17 @@ function NewJobPageContent() {
 
                             {/* Required Skills (Comma-separated) */}
                             <div className="space-y-1.5">
-                                <label htmlFor="requirements" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                <label htmlFor="requirements" className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider block">
                                     Required Skills (comma-separated)
                                 </label>
                                 <div className="relative">
-                                    <Send className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <Send className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 h-5 w-5" />
                                     <input
                                         id="requirements"
                                         type="text"
                                         required
                                         placeholder="e.g., React, TypeScript, Node.js"
-                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all"
                                         value={requirements}
                                         onChange={(e) => setRequirements(e.target.value)}
                                     />
@@ -191,17 +191,17 @@ function NewJobPageContent() {
 
                             {/* Description */}
                             <div className="space-y-1.5 md:col-span-2">
-                                <label htmlFor="description" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                <label htmlFor="description" className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider block">
                                     Role Description
                                 </label>
                                 <div className="relative">
-                                    <FileText className="absolute left-3 top-4 text-slate-400 h-5 w-5" />
+                                    <FileText className="absolute left-3 top-4 text-slate-400 dark:text-slate-400 h-5 w-5" />
                                     <textarea
                                         id="description"
                                         required
                                         rows={6}
                                         placeholder="Outline the responsibilities, project scope, and team expectations..."
-                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all"
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
                                     />
@@ -210,17 +210,17 @@ function NewJobPageContent() {
                         </div>
 
                         {/* Actions */}
-                        <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                        <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-700">
                             <Link 
                                 href="/recruiter/dashboard"
-                                className="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-50 transition-colors shadow-sm text-sm"
+                                className="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-50 rounded-xl font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm text-sm"
                             >
                                 Cancel
                             </Link>
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-md hover:shadow-lg shadow-emerald-600/10 focus:ring-4 focus:ring-emerald-500/20 flex items-center gap-2 disabled:opacity-75 text-sm cursor-pointer"
+                                className="bg-emerald-600 dark:bg-green-700 dark:text-slate-50 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-md dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] hover:shadow-lg shadow-emerald-600/10 focus:ring-4 focus:ring-emerald-500/20 flex items-center gap-2 disabled:opacity-75 text-sm cursor-pointer"
                             >
                                 {loading ? (
                                     <>

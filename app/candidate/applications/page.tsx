@@ -77,34 +77,34 @@ function CandidateApplicationsContent() {
         <DashboardLayout>
             <div className="p-8">
                 <div className="max-w-7xl mx-auto">
-                    <h2 className="text-3xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                        <FileText className="w-8 h-8 text-emerald-600" />
+                    <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-50 mb-6 flex items-center gap-2">
+                        <FileText className="w-8 h-8 text-emerald-600 dark:text-green-400" />
                         My Applications
                     </h2>
                     {applications.length === 0 ? (
-                        <div className="bg-white rounded-xl shadow p-12 text-center border border-slate-100 flex flex-col items-center">
-                            <div className="bg-slate-50 p-4 rounded-full mb-4">
+                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow p-12 text-center border border-slate-100 dark:border-slate-700 flex flex-col items-center">
+                            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-full mb-4">
                                 <Briefcase className="w-10 h-10 text-slate-300" />
                             </div>
-                            <h3 className="text-xl font-bold text-slate-700 mb-2">No Applications Yet</h3>
-                            <p className="text-slate-500">Explore our jobs board to find your next great opportunity.</p>
+                            <h3 className="text-xl font-bold text-slate-700 dark:text-slate-50 mb-2">No Applications Yet</h3>
+                            <p className="text-slate-500 dark:text-slate-400">Explore our jobs board to find your next great opportunity.</p>
                         </div>
                     ) : (
-                        <div className="bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden">
+                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg dark:shadow-[0_4px_14px_rgba(0,0,0,0.4)] border border-slate-100 dark:border-slate-700 overflow-hidden">
                             <div className="overflow-x-auto">
                                 <table className="w-full">
-                                    <thead className="bg-slate-50 border-b border-slate-100">
+                                    <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-700">
                                         <tr>
-                                            <th className="text-left p-4 text-sm font-semibold text-slate-600">Job Title</th>
-                                            <th className="text-left p-4 text-sm font-semibold text-slate-600">Date Applied</th>
-                                            <th className="text-left p-4 text-sm font-semibold text-slate-600">Status</th>
+                                            <th className="text-left p-4 text-sm font-semibold text-slate-600 dark:text-slate-300">Job Title</th>
+                                            <th className="text-left p-4 text-sm font-semibold text-slate-600 dark:text-slate-300">Date Applied</th>
+                                            <th className="text-left p-4 text-sm font-semibold text-slate-600 dark:text-slate-300">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
                                         {applications.map((app) => (
                                             <tr key={app.id} className="hover:bg-slate-50/50 transition-colors">
-                                                <td className="p-4 font-medium text-slate-800">{app.job_title}</td>
-                                                <td className="p-4 text-slate-600">
+                                                <td className="p-4 font-medium text-slate-800 dark:text-slate-50">{app.job_title}</td>
+                                                <td className="p-4 text-slate-600 dark:text-slate-300">
                                                     {app.created_at ? new Date(app.created_at).toLocaleDateString() : 'N/A'}
                                                 </td>
                                                 <td className="p-4">

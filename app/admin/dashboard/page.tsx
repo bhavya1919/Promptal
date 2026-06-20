@@ -132,9 +132,28 @@ function AdminDashboardContent() {
     const filteredCompanies = companies.filter(c => c.company_name?.toLowerCase().includes(searchTerm.toLowerCase()));
     const filteredUsers = users.filter(u => u.name?.toLowerCase().includes(searchTerm.toLowerCase()));
     const filteredJobs = jobs.filter(j => j.title?.toLowerCase().includes(searchTerm.toLowerCase()));
-    const filteredApplications = applications.filter(a => a.recruiter_status?.toLowerCase().includes(searchTerm.toLowerCase()));
-    const filteredInterviews = interviews.filter(i => i.status?.toLowerCase().includes(searchTerm.toLowerCase()) || i.interview_date?.includes(searchTerm));
+    const filteredApplications = applications.filter(a => {
+        const candidate = candidates.find(c => c.id === a.candidate_id);
+        const job = jobs.find(j => j.id === a.job_id);
+        const search = searchTerm.toLowerCase();
+        return (
+            a.recruiter_status?.toLowerCase().includes(search) || 
+            candidate?.candidate_name?.toLowerCase().includes(search) || 
+            job?.title?.toLowerCase().includes(search)
+        );
+    });
+    const filteredInterviews = interviews.filter(i => {
+        const app = applications.find(a => a.id === i.application_id);
+        const candidate = candidates.find(c => c.id === app?.candidate_id);
+        const search = searchTerm.toLowerCase();
+        return (
+            i.status?.toLowerCase().includes(search) || 
+            i.interview_date?.includes(search) ||
+            candidate?.candidate_name?.toLowerCase().includes(search)
+        );
+    });
     const filteredOffers = offers.filter(o => o.candidate_name?.toLowerCase().includes(searchTerm.toLowerCase()) || o.job_title?.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredCandidates = candidates.filter(c => c.candidate_name?.toLowerCase().includes(searchTerm.toLowerCase()) || c.skills?.toLowerCase().includes(searchTerm.toLowerCase()));
 
     return (
         <DashboardLayout>
@@ -168,22 +187,22 @@ function AdminDashboardContent() {
                     </div>
                 </div>
 
-                <div className="mt-8 bg-white p-6 rounded-xl shadow border border-slate-100">
-                    <h2 className="text-2xl font-bold mb-6 text-slate-800">
+                <div className="mt-8 bg-white dark:bg-slate-800 p-6 rounded-xl shadow border border-slate-100 dark:border-slate-700">
+                    <h2 className="text-2xl font-bold mb-6 text-slate-800 dark:text-slate-50">
                         Diversity Reporting
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-6">
-                        <div className="border border-slate-200 rounded-lg p-5 bg-slate-50">
-                            <h3 className="font-semibold mb-4 text-slate-700 uppercase tracking-wider text-sm">
+                        <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-5 bg-slate-50 dark:bg-slate-900">
+                            <h3 className="font-semibold mb-4 text-slate-700 dark:text-slate-50 uppercase tracking-wider text-sm">
                                 Education Distribution
                             </h3>
 
                             {Object.entries(educationStats).map(([education, count]) => (
                                 <div key={education} className="mb-4">
-                                    <div className="flex justify-between text-sm mb-1.5 font-medium text-slate-600">
+                                    <div className="flex justify-between text-sm mb-1.5 font-medium text-slate-600 dark:text-slate-300">
                                         <span>{education}</span>
-                                        <span className="font-bold text-slate-800">{count}</span>
+                                        <span className="font-bold text-slate-800 dark:text-slate-50">{count}</span>
                                     </div>
 
                                     <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
@@ -198,16 +217,16 @@ function AdminDashboardContent() {
                             ))}
                         </div>
 
-                        <div className="border border-slate-200 rounded-lg p-5 bg-slate-50">
-                            <h3 className="font-semibold mb-4 text-slate-700 uppercase tracking-wider text-sm">
+                        <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-5 bg-slate-50 dark:bg-slate-900">
+                            <h3 className="font-semibold mb-4 text-slate-700 dark:text-slate-50 uppercase tracking-wider text-sm">
                                 Experience Distribution
                             </h3>
 
                             {Object.entries(experienceStats).map(([experience, count]) => (
                                 <div key={experience} className="mb-4">
-                                    <div className="flex justify-between text-sm mb-1.5 font-medium text-slate-600">
+                                    <div className="flex justify-between text-sm mb-1.5 font-medium text-slate-600 dark:text-slate-300">
                                         <span>{experience}</span>
-                                        <span className="font-bold text-slate-800">{count}</span>
+                                        <span className="font-bold text-slate-800 dark:text-slate-50">{count}</span>
                                     </div>
 
                                     <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
@@ -231,10 +250,10 @@ function AdminDashboardContent() {
                     onClick={() => setDrawerOpen(false)}
                 >
                     <div
-                        className="absolute right-0 top-0 h-full w-[500px] bg-white shadow-2xl p-6 overflow-y-auto transform transition-transform duration-300 ease-in-out"
+                        className="absolute right-0 top-0 h-full w-[500px] bg-white dark:bg-slate-800 shadow-2xl p-6 overflow-y-auto transform transition-transform duration-300 ease-in-out"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h2 className="text-2xl font-bold mb-6">
+                        <h2 className="text-2xl font-bold mb-6 text-slate-900 dark:text-slate-50">
                             {selectedView.toUpperCase()}
                         </h2>
 
@@ -243,94 +262,119 @@ function AdminDashboardContent() {
                             placeholder="Search..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full border rounded-lg p-3 mt-4 mb-6"
+                            className="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 rounded-lg p-3 mt-4 mb-6 outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all"
                         />
 
                         {selectedView === "companies" && (
                             filteredCompanies.length > 0 ? filteredCompanies.map((company) => (
-                                <div key={company.id} className="border rounded-lg p-4 mb-3">
-                                    <h3 className="font-bold">{company.company_name}</h3>
-                                    <p>{company.location}</p>
-                                    <p>{company.website}</p>
+                                <div key={company.id} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-3 bg-white dark:bg-slate-800">
+                                    <h3 className="font-bold text-slate-900 dark:text-slate-50">{company.company_name}</h3>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300 mt-1"><span className="font-medium text-slate-500">Location:</span> {company.location || 'Not specified'}</p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-500">Website:</span> {company.website || 'Not specified'}</p>
                                 </div>
                             )) : (
-                                <div className="text-center p-8 bg-slate-50 rounded-xl border border-dashed border-slate-200 mt-4">
-                                    <p className="text-slate-500 font-medium">No companies found.</p>
+                                <div className="text-center p-8 bg-slate-50 dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 mt-4">
+                                    <p className="text-slate-500 dark:text-slate-400 font-medium">No companies found.</p>
                                 </div>
                             )
                         )}
 
                         {selectedView === "users" && (
                             filteredUsers.length > 0 ? filteredUsers.map((user) => (
-                                <div key={user.id} className="border rounded-lg p-4 mb-3">
-                                    <h3 className="font-bold">{user.name}</h3>
-                                    <p>{user.email}</p>
-                                    <p>{user.role}</p>
+                                <div key={user.id} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-3 bg-white dark:bg-slate-800">
+                                    <h3 className="font-bold text-slate-900 dark:text-slate-50">{user.name}</h3>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300 mt-1"><span className="font-medium text-slate-500">Email:</span> {user.email}</p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-500">Role:</span> {user.role}</p>
                                 </div>
                             )) : (
-                                <div className="text-center p-8 bg-slate-50 rounded-xl border border-dashed border-slate-200 mt-4">
-                                    <p className="text-slate-500 font-medium">No users found.</p>
+                                <div className="text-center p-8 bg-slate-50 dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 mt-4">
+                                    <p className="text-slate-500 dark:text-slate-400 font-medium">No users found.</p>
                                 </div>
                             )
                         )}
 
                         {selectedView === "jobs" && (
                             filteredJobs.length > 0 ? filteredJobs.map((job) => (
-                                <div key={job.id} className="border rounded-lg p-4 mb-3">
-                                    <h3 className="font-bold">{job.title}</h3>
-                                    <p>{job.location}</p>
-                                    <p>{job.job_type}</p>
-                                    <p>{job.salary_range}</p>
+                                <div key={job.id} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-3 bg-white dark:bg-slate-800">
+                                    <h3 className="font-bold text-slate-900 dark:text-slate-50">{job.title}</h3>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300 mt-1"><span className="font-medium text-slate-500">Location:</span> {job.location}</p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-500">Type:</span> {job.job_type}</p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-500">Salary:</span> {job.salary_range}</p>
                                 </div>
                             )) : (
-                                <div className="text-center p-8 bg-slate-50 rounded-xl border border-dashed border-slate-200 mt-4">
-                                    <p className="text-slate-500 font-medium">No jobs found.</p>
+                                <div className="text-center p-8 bg-slate-50 dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 mt-4">
+                                    <p className="text-slate-500 dark:text-slate-400 font-medium">No jobs found.</p>
                                 </div>
                             )
                         )}
 
                         {selectedView === "applications" && (
-                            filteredApplications.length > 0 ? filteredApplications.map((app) => (
-                                <div key={app.id} className="border rounded-lg p-4 mb-3">
-                                    <p>Status: {app.recruiter_status}</p>
-                                    <p>AI Score: {app.ai_score}%</p>
+                            filteredApplications.length > 0 ? filteredApplications.map((app) => {
+                                const candidate = candidates.find(c => c.id === app.candidate_id);
+                                const job = jobs.find(j => j.id === app.job_id);
+                                return (
+                                <div key={app.id} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-3 bg-white dark:bg-slate-800">
+                                    <h3 className="font-bold text-slate-900 dark:text-slate-50">{candidate?.candidate_name || 'Unknown Candidate'}</h3>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300 mt-1"><span className="font-medium text-slate-500">Job Role:</span> {job?.title || 'Unknown Job'}</p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-500">Status:</span> <span className={`font-semibold ${app.recruiter_status === 'Selected' ? 'text-emerald-500' : app.recruiter_status === 'Rejected' ? 'text-red-500' : 'text-blue-500'}`}>{app.recruiter_status}</span></p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-500">AI Score:</span> {app.ai_score}%</p>
                                 </div>
-                            )) : (
-                                <div className="text-center p-8 bg-slate-50 rounded-xl border border-dashed border-slate-200 mt-4">
-                                    <p className="text-slate-500 font-medium">No applications found.</p>
+                                );
+                            }) : (
+                                <div className="text-center p-8 bg-slate-50 dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 mt-4">
+                                    <p className="text-slate-500 dark:text-slate-400 font-medium">No applications found.</p>
                                 </div>
                             )
                         )}
 
                         {selectedView === "interviews" && (
-                            filteredInterviews.length > 0 ? filteredInterviews.map((interview) => (
-                                <div key={interview.id} className="border rounded-lg p-4 mb-3">
-                                    <p>{interview.interview_date}</p>
-                                    <p>{interview.interview_time}</p>
+                            filteredInterviews.length > 0 ? filteredInterviews.map((interview) => {
+                                const app = applications.find(a => a.id === interview.application_id);
+                                const candidate = candidates.find(c => c.id === app?.candidate_id);
+                                return (
+                                <div key={interview.id} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-3 bg-white dark:bg-slate-800">
+                                    <h3 className="font-bold text-slate-900 dark:text-slate-50">{candidate?.candidate_name || 'Unknown Candidate'}</h3>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300 mt-1"><span className="font-medium text-slate-500">Date:</span> {interview.interview_date}</p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-500">Time:</span> {interview.interview_time}</p>
                                     {interview.meeting_link && (
-                                        <a href={interview.meeting_link} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">
+                                        <a href={interview.meeting_link} target="_blank" rel="noreferrer" className="text-sm text-blue-600 dark:text-blue-400 hover:underline mt-1 inline-block font-medium">
                                             Join Meeting
                                         </a>
                                     )}
                                 </div>
+                                );
+                            }) : (
+                                <div className="text-center p-8 bg-slate-50 dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 mt-4">
+                                    <p className="text-slate-500 dark:text-slate-400 font-medium">No interviews found.</p>
+                                </div>
+                            )
+                        )}
+
+                        {selectedView === "candidates" && (
+                            filteredCandidates.length > 0 ? filteredCandidates.map((candidate) => (
+                                <div key={candidate.id} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-3 bg-white dark:bg-slate-800">
+                                    <h3 className="font-bold text-slate-900 dark:text-slate-50">{candidate.candidate_name}</h3>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300 mt-1"><span className="font-medium text-slate-500">Skills:</span> {candidate.skills || 'Not specified'}</p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-500">Education:</span> {candidate.education || 'Not specified'}</p>
+                                </div>
                             )) : (
-                                <div className="text-center p-8 bg-slate-50 rounded-xl border border-dashed border-slate-200 mt-4">
-                                    <p className="text-slate-500 font-medium">No interviews found.</p>
+                                <div className="text-center p-8 bg-slate-50 dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 mt-4">
+                                    <p className="text-slate-500 dark:text-slate-400 font-medium">No candidates found.</p>
                                 </div>
                             )
                         )}
 
                         {selectedView === "offers" && (
                             filteredOffers.length > 0 ? filteredOffers.map((offer) => (
-                                <div key={offer.id} className="border rounded-lg p-4 mb-3">
-                                    <h3 className="font-bold">{offer.candidate_name}</h3>
-                                    <p>{offer.job_title}</p>
-                                    <p>{offer.company_name}</p>
-                                    <p>{offer.status}</p>
+                                <div key={offer.id} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-3 bg-white dark:bg-slate-800">
+                                    <h3 className="font-bold text-slate-900 dark:text-slate-50">{offer.candidate_name}</h3>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300 mt-1"><span className="font-medium text-slate-500">Job Role:</span> {offer.job_title}</p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-500">Company:</span> {offer.company_name}</p>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300"><span className="font-medium text-slate-500">Status:</span> <span className={`font-semibold ${offer.status === 'Accepted' ? 'text-emerald-500' : 'text-blue-500'}`}>{offer.status}</span></p>
                                 </div>
                             )) : (
-                                <div className="text-center p-8 bg-slate-50 rounded-xl border border-dashed border-slate-200 mt-4">
-                                    <p className="text-slate-500 font-medium">No offer letters found.</p>
+                                <div className="text-center p-8 bg-slate-50 dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-700 mt-4">
+                                    <p className="text-slate-500 dark:text-slate-400 font-medium">No offer letters found.</p>
                                 </div>
                             )
                         )}

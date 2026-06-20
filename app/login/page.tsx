@@ -57,7 +57,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col md:flex-row bg-slate-50">
+        <div className="min-h-screen flex flex-col md:flex-row bg-slate-50 dark:bg-slate-900">
             {/* Left Side - Branding */}
             <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-emerald-600 to-emerald-900 flex-col justify-center items-center text-white p-12">
                 <div className="max-w-md w-full space-y-8">
@@ -83,24 +83,24 @@ export default function LoginPage() {
                 <div className="w-full max-w-md space-y-8">
                     <div className="text-center md:text-left">
                         <h2 className="text-3xl font-bold text-slate-900">Welcome Back</h2>
-                        <p className="text-slate-500 mt-2">Please sign in to your account</p>
+                        <p className="text-slate-500 dark:text-slate-400 mt-2">Please sign in to your account</p>
                     </div>
 
                     <form onSubmit={handleLogin} className="space-y-6">
                         <div className="space-y-4">
                             <div className="space-y-1.5">
-                                <label htmlFor="email" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                <label htmlFor="email" className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider block">
                                     Email Address
                                 </label>
                                 <div className="relative">
-                                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 h-5 w-5" />
                                     <input
                                         id="email"
                                         type="email"
                                         required
                                         placeholder="Enter your email address"
                                         aria-label="Email address"
-                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
@@ -108,18 +108,18 @@ export default function LoginPage() {
                             </div>
 
                             <div className="space-y-1.5">
-                                <label htmlFor="password" className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                                <label htmlFor="password" className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider block">
                                     Password
                                 </label>
                                 <div className="relative">
-                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
+                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 h-5 w-5" />
                                     <input
                                         id="password"
                                         type={showPassword ? "text" : "password"}
                                         required
                                         placeholder="Enter your password"
                                         aria-label="Password"
-                                        className="w-full pl-10 pr-12 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all"
+                                        className="w-full pl-10 pr-12 py-3 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 dark:focus:border-blue-400 outline-none transition-all"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
@@ -127,7 +127,7 @@ export default function LoginPage() {
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
                                         aria-label={showPassword ? "Hide password" : "Show password"}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400 hover:text-slate-600 transition-colors"
                                     >
                                         {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                                     </button>
@@ -137,10 +137,10 @@ export default function LoginPage() {
 
                         <div className="flex items-center justify-between">
                             <label className="flex items-center">
-                                <input type="checkbox" className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
-                                <span className="ml-2 text-sm text-slate-600">Remember me</span>
+                                <input type="checkbox" className="rounded border-slate-300 dark:border-slate-700 text-emerald-600 dark:text-green-400 focus:ring-emerald-500 dark:focus:ring-blue-400" />
+                                <span className="ml-2 text-sm text-slate-600 dark:text-slate-300">Remember me</span>
                             </label>
-                            <Link href="#" className="text-sm font-medium text-emerald-600 hover:text-emerald-500">
+                            <Link href="#" className="text-sm font-medium text-emerald-600 dark:text-green-400 hover:text-emerald-500">
                                 Forgot password?
                             </Link>
                         </div>
@@ -148,7 +148,7 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-emerald-600 text-white py-3 rounded-xl hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-500/20 font-medium transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                            className="w-full bg-emerald-600 dark:bg-green-700 dark:text-slate-50 text-white py-3 rounded-xl hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-500/20 font-medium transition-all flex items-center justify-center gap-2 disabled:opacity-70"
                         >
                             {loading ? (
                                 <>
@@ -161,9 +161,9 @@ export default function LoginPage() {
                         </button>
                     </form>
 
-                    <p className="text-center text-sm text-slate-600">
+                    <p className="text-center text-sm text-slate-600 dark:text-slate-300">
                         Don't have an account?{" "}
-                        <Link href="/signup" className="font-medium text-emerald-600 hover:text-emerald-500">
+                        <Link href="/signup" className="font-medium text-emerald-600 dark:text-green-400 hover:text-emerald-500">
                             Sign up here
                         </Link>
                     </p>
