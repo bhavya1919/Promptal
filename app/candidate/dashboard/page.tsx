@@ -590,6 +590,23 @@ function CandidateDashboardContent() {
                                             </div>
                                         </div>
                                         <div className="mt-6 pt-4 border-t border-slate-100">
+                                            <div className="mb-3">
+                                                {interview.platform === "Google Meet" && (
+                                                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                                                        🟢 Google Meet
+                                                    </span>
+                                                )}
+                                                {interview.platform === "Zoom" && (
+                                                    <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                                                        🔵 Zoom
+                                                    </span>
+                                                )}
+                                                {interview.platform === "Microsoft Teams" && (
+                                                    <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
+                                                        🟣 Microsoft Teams
+                                                    </span>
+                                                )}
+                                            </div>
                                             {interview.meeting_link ? (
                                                 <a 
                                                     href={interview.meeting_link} 
