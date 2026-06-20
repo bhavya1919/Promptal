@@ -28,6 +28,7 @@ function AdminDashboardContent() {
     const [applications, setApplications] = useState<any[]>([]);
     const [interviews, setInterviews] = useState<any[]>([]);
     const [offers, setOffers] = useState<any[]>([]);
+    const [candidates, setCandidates] = useState<any[]>([]);
 
     const [stats, setStats] = useState({
         users: 0,
@@ -98,6 +99,7 @@ function AdminDashboardContent() {
         const { data: applicationsData } = await supabase.from("applications").select("*");
         const { data: interviewsData } = await supabase.from("interviews").select("*");
         const { data: offersData } = await supabase.from("offer_letters").select("*");
+        const { data: candidatesData } = await supabase.from("candidates").select("*");
 
         setUsers(usersData || []);
         setCompanies(companiesData || []);
@@ -105,6 +107,7 @@ function AdminDashboardContent() {
         setApplications(applicationsData || []);
         setInterviews(interviewsData || []);
         setOffers(offersData || []);
+        setCandidates(candidatesData || []);
     };
 
     const filteredCompanies = companies.filter(c => c.company_name?.toLowerCase().includes(searchTerm.toLowerCase()));
