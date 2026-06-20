@@ -10,6 +10,7 @@ import {
   FileBadge, 
   ShieldCheck, 
   Briefcase,
+  Building2,
   User,
   LogOut,
   X
@@ -59,6 +60,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
     { name: "Applications", href: "/recruiter/applications", icon: FileText },
     { name: "Interviews", href: "/recruiter/interviews", icon: CalendarDays },
     { name: "Offers", href: "/recruiter/offers", icon: FileBadge },
+    { name: "Company Profile", href: "/recruiter/company", icon: Building2 },
   ];
 
   const adminLinks = [
