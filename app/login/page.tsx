@@ -46,6 +46,8 @@ export default function LoginPage() {
                 router.push("/candidate/dashboard");
             } else if (userData.role === "recruiter") {
                 router.push("/recruiter/dashboard");
+            } else if (userData.role === "admin") {
+                router.push("/admin/dashboard");
             }
         } catch (error) {
             console.error(error);

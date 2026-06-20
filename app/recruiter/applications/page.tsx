@@ -9,12 +9,17 @@ interface ApplicationData {
     candidate_name: string;
     candidate_email: string;
     skills: string;
+    education: string;
+    experience: string;
     job_title: string;
     requirements: string;
     recruiter_status: string;
     ai_score: number;
+    resume_url: string;
+    created_at: string;
 }
 
+import { X } from "lucide-react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { toast } from "react-hot-toast";
 import StatusBadge from "@/components/StatusBadge";
@@ -32,6 +37,7 @@ export default function ApplicationsPage() {
 function ApplicationsPageContent() {
     const [applications, setApplications] = useState<ApplicationData[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedApp, setSelectedApp] = useState<ApplicationData | null>(null);
 
     useEffect(() => {
         fetchApplications();
@@ -108,11 +114,15 @@ function ApplicationsPageContent() {
                     candidate?.candidate_name || "Unknown",
                 candidate_email: userData?.email || "",
                 skills: candidate?.skills || "",
+                education: candidate?.education || "",
+                experience: candidate?.experience || "",
                 job_title: job?.title || "",
                 requirements: job?.requirements || "",
                 recruiter_status:
                     app.recruiter_status || "Applied",
                 ai_score: score,
+                resume_url: candidate?.resume_url || "",
+                created_at: app.created_at || new Date().toISOString(),
             });
         }
 
@@ -121,15 +131,16 @@ function ApplicationsPageContent() {
 
     };
 
-    const shortlistCandidate = async (
+    const updateStatus = async (
         applicationId: string,
         candidateName: string,
-        candidateEmail: string
+        candidateEmail: string,
+        status: string
     ) => {
         const { error } = await supabase
             .from("applications")
             .update({
-                recruiter_status: "Shortlisted",
+                recruiter_status: status,
             })
             .eq("id", applicationId);
 
@@ -138,18 +149,31 @@ function ApplicationsPageContent() {
             return;
         }
 
-        await fetch("/api/send-email", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: candidateEmail,
-                candidateName,
-            }),
-        });
+        if (status === "Shortlisted" || status === "Rejected" || status === "On Hold") {
+            await fetch("/api/send-email", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: candidateEmail,
+                    candidateName,
+                    status
+                }),
+            });
 
-        toast.success("Candidate Shortlisted");
+            await fetch("/api/send-telegram", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    message: `Application Status Updated: ${status}`
+                }),
+            });
+        }
+
+        toast.success(`Candidate ${status}`);
 
         fetchApplications();
 
@@ -179,13 +203,69 @@ function ApplicationsPageContent() {
         );
     };
 
+    const exportToCSV = () => {
+        const headers = ["Candidate", "Email", "Job", "Status", "AI Score", "Applied Date"];
+        const csvRows = applications.map(app => [
+            `"${app.candidate_name}"`,
+            `"${app.candidate_email}"`,
+            `"${app.job_title}"`,
+            `"${app.recruiter_status}"`,
+            app.ai_score,
+            `"${new Date(app.created_at).toLocaleDateString()}"`
+        ]);
+
+        const csvContent = [headers.join(","), ...csvRows.map(row => row.join(","))].join("\n");
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "applications_export.csv");
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (<DashboardLayout><div className="p-8"> <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">
-            Applications Management
-        </h1>
+        <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold">
+                Applications Management
+            </h1>
+            <button 
+                onClick={exportToCSV}
+                className="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow transition-colors"
+            >
+                Export CSV
+            </button>
+        </div>
 
         {loading ? (
-            <p>Loading...</p>
+            <div className="bg-white rounded-2xl shadow overflow-hidden">
+                <div className="p-4 border-b bg-slate-50 flex gap-4 animate-pulse">
+                    <div className="h-4 bg-slate-200 rounded w-1/6"></div>
+                    <div className="h-4 bg-slate-200 rounded w-1/4"></div>
+                    <div className="h-4 bg-slate-200 rounded w-1/4"></div>
+                    <div className="h-4 bg-slate-200 rounded w-1/6"></div>
+                </div>
+                {[1, 2, 3, 4, 5].map(i => (
+                    <div key={i} className="p-4 border-b flex gap-4 animate-pulse items-center">
+                        <div className="h-10 bg-slate-100 rounded w-1/6"></div>
+                        <div className="h-4 bg-slate-100 rounded w-1/4"></div>
+                        <div className="h-4 bg-slate-100 rounded w-1/4"></div>
+                        <div className="h-8 bg-slate-100 rounded w-1/6"></div>
+                    </div>
+                ))}
+            </div>
+        ) : applications.length === 0 ? (
+            <div className="bg-white rounded-2xl shadow p-12 text-center border border-slate-100 flex flex-col items-center">
+                <div className="bg-slate-50 p-4 rounded-full mb-4">
+                    <svg className="w-10 h-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <h3 className="text-xl font-bold text-slate-700 mb-2">No Applications Found</h3>
+                <p className="text-slate-500">There are currently no applications submitted by candidates.</p>
+            </div>
         ) : (
             <div className="bg-white rounded-2xl shadow overflow-hidden">
 
@@ -221,7 +301,27 @@ function ApplicationsPageContent() {
                                 className="border-b"
                             >
                                 <td className="p-4">
-                                    {app.candidate_name}
+                                    <div className="font-semibold text-slate-800">
+                                        {app.candidate_name}
+                                    </div>
+                                    <div className="mt-2 flex items-center gap-2">
+                                        <button
+                                            onClick={() => setSelectedApp(app)}
+                                            className="inline-block bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm transition-all"
+                                        >
+                                            View Details
+                                        </button>
+                                        {app.resume_url && (
+                                            <a
+                                                href={app.resume_url}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all"
+                                            >
+                                                Resume
+                                            </a>
+                                        )}
+                                    </div>
                                 </td>
 
                                 <td className="p-4">
@@ -243,48 +343,83 @@ function ApplicationsPageContent() {
                                 </td>
 
                                 <td className="p-4">
-                                    {app.recruiter_status === "Shortlisted" ? (
-                                        <span className="text-emerald-600 font-semibold text-sm">
-                                            Shortlisted
+                                    {app.recruiter_status !== "Applied" ? (
+                                        <span className={`font-semibold text-sm ${
+                                            app.recruiter_status === "Shortlisted" ? "text-emerald-600" :
+                                            app.recruiter_status === "Rejected" ? "text-red-600" :
+                                            app.recruiter_status === "On Hold" ? "text-yellow-600" : "text-gray-600"
+                                        }`}>
+                                            {app.recruiter_status}
                                         </span>
                                     ) : (
-                                        <div className="flex gap-2">
-                                            <button
-                                                onClick={() =>
-                                                    shortlistCandidate(
-                                                        app.id,
-                                                        app.candidate_name,
-                                                        app.candidate_email
-                                                    )
-                                                }
-                                                className="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
-                                            >
-                                                Shortlist
-                                            </button>
-                                            <button
-                                                onClick={() =>
-                                                    handleGenerateOffer(
-                                                        app.candidate_name,
-                                                        app.job_title,
-                                                        "Promtal Jobs"
-                                                    )
-                                                }
-                                                className="bg-purple-600 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
-                                            >
-                                                Generate Offer
-                                            </button>
-                                            <button
-                                                onClick={() =>
-                                                    handleGenerateExperienceLetter(
-                                                        app.candidate_name,
-                                                        app.job_title,
-                                                        "Promtal Jobs"
-                                                    )
-                                                }
-                                                className="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
-                                            >
-                                                Experience Letter
-                                            </button>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() =>
+                                                        updateStatus(
+                                                            app.id,
+                                                            app.candidate_name,
+                                                            app.candidate_email,
+                                                            "Shortlisted"
+                                                        )
+                                                    }
+                                                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                                >
+                                                    Shortlist
+                                                </button>
+                                                <button
+                                                    onClick={() =>
+                                                        updateStatus(
+                                                            app.id,
+                                                            app.candidate_name,
+                                                            app.candidate_email,
+                                                            "Rejected"
+                                                        )
+                                                    }
+                                                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                                >
+                                                    Reject
+                                                </button>
+                                                <button
+                                                    onClick={() =>
+                                                        updateStatus(
+                                                            app.id,
+                                                            app.candidate_name,
+                                                            app.candidate_email,
+                                                            "On Hold"
+                                                        )
+                                                    }
+                                                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                                >
+                                                    On Hold
+                                                </button>
+                                            </div>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() =>
+                                                        handleGenerateOffer(
+                                                            app.candidate_name,
+                                                            app.job_title,
+                                                            "Promtal Jobs"
+                                                        )
+                                                    }
+                                                    className="bg-purple-600 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                                >
+                                                    Generate Offer
+                                                </button>
+                                                <button
+                                                    onClick={() =>
+                                                        handleGenerateExperienceLetter(
+                                                            app.candidate_name,
+                                                            app.job_title,
+                                                            "Promtal Jobs"
+                                                        )
+                                                    }
+                                                    className="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                                >
+                                                    Experience Letter
+                                                </button>
+                                            </div>
                                         </div>
                                     )}
                                 </td>
@@ -298,6 +433,99 @@ function ApplicationsPageContent() {
 
     </div>
     </div>
+
+    {/* Application Details Modal */}
+    {selectedApp && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
+                <div className="bg-slate-50 border-b border-slate-100 p-6 flex justify-between items-center shrink-0">
+                    <div>
+                        <h3 className="text-xl font-bold text-slate-800">Candidate Profile</h3>
+                        <p className="text-sm text-slate-500">Full application details</p>
+                    </div>
+                    <button 
+                        onClick={() => setSelectedApp(null)}
+                        className="text-slate-400 hover:text-slate-600 bg-white hover:bg-slate-100 p-2 rounded-full transition-colors"
+                    >
+                        <X className="w-5 h-5" />
+                    </button>
+                </div>
+                
+                <div className="p-6 overflow-y-auto space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Name</p>
+                            <p className="font-medium text-slate-800">{selectedApp.candidate_name}</p>
+                        </div>
+                        <div>
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Email</p>
+                            <p className="font-medium text-slate-800">{selectedApp.candidate_email}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Applied Date</p>
+                        <p className="font-medium text-slate-800">{new Date(selectedApp.created_at).toLocaleDateString()}</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">AI Match Score</p>
+                            <p className="text-2xl font-bold text-emerald-600">{selectedApp.ai_score}%</p>
+                        </div>
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Application Status</p>
+                            <div className="mt-1">
+                                <StatusBadge status={selectedApp.recruiter_status} />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Skills</p>
+                        <div className="flex flex-wrap gap-2">
+                            {selectedApp.skills ? selectedApp.skills.split(',').map((skill, idx) => (
+                                <span key={idx} className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold border border-blue-100">
+                                    {skill.trim()}
+                                </span>
+                            )) : <p className="text-slate-400 italic text-sm">No skills specified</p>}
+                        </div>
+                    </div>
+
+                    <div>
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Education</p>
+                        <p className="text-sm text-slate-700 whitespace-pre-wrap">{selectedApp.education || <span className="text-slate-400 italic">Not specified</span>}</p>
+                    </div>
+
+                    <div>
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Experience</p>
+                        <p className="text-sm text-slate-700 whitespace-pre-wrap">{selectedApp.experience || <span className="text-slate-400 italic">Not specified</span>}</p>
+                    </div>
+                </div>
+
+                <div className="bg-slate-50 border-t border-slate-100 p-6 flex justify-between items-center shrink-0">
+                    {selectedApp.resume_url ? (
+                        <a 
+                            href={selectedApp.resume_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold shadow transition-colors flex items-center gap-2"
+                        >
+                            View Resume
+                        </a>
+                    ) : (
+                        <p className="text-slate-500 text-sm italic">No resume provided</p>
+                    )}
+                    <button 
+                        onClick={() => setSelectedApp(null)}
+                        className="px-5 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition-colors shadow-sm"
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    )}
     </DashboardLayout>
     );
 }
