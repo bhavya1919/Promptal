@@ -30,6 +30,9 @@ function AdminDashboardContent() {
     const [offers, setOffers] = useState<any[]>([]);
     const [candidates, setCandidates] = useState<any[]>([]);
 
+    const [educationStats, setEducationStats] = useState<Record<string, number>>({});
+    const [experienceStats, setExperienceStats] = useState<Record<string, number>>({});
+
     const [stats, setStats] = useState({
         users: 0,
         companies: 0,
@@ -108,6 +111,23 @@ function AdminDashboardContent() {
         setInterviews(interviewsData || []);
         setOffers(offersData || []);
         setCandidates(candidatesData || []);
+
+        const educationCount: Record<string, number> = {};
+        (candidatesData || []).forEach((candidate: any) => {
+            const education = candidate.education || "Unknown";
+            educationCount[education] = (educationCount[education] || 0) + 1;
+        });
+        setEducationStats(educationCount);
+
+        const experienceCount: Record<string, number> = {};
+        (candidatesData || []).forEach((candidate: any) => {
+            const experience = candidate.experience || "Unknown";
+            experienceCount[experience] = (experienceCount[experience] || 0) + 1;
+        });
+        setExperienceStats(experienceCount);
+
+        console.log("Education Stats:", educationCount);
+        console.log("Experience Stats:", experienceCount);
     };
 
     const filteredCompanies = companies.filter(c => c.company_name?.toLowerCase().includes(searchTerm.toLowerCase()));
