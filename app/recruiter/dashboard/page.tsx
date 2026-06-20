@@ -375,7 +375,7 @@ function RecruiterDashboardContent() {
                     <StatCard title="Shortlist Rate" value={`${analytics.shortlistRate}%`} icon={UserCheck} color="emerald" />
                     <StatCard title="Interview Rate" value={`${analytics.interviewRate}%`} icon={CalendarDays} color="indigo" />
                     <StatCard title="Offer Rate" value={`${analytics.offerRate}%`} icon={FileBadge} color="purple" />
-                    <StatCard title="Rejection Rate" value={`${analytics.rejectionRate}%`} icon={XCircle} color="red" />
+                    <StatCard title="Rejection Rate" value={`${analytics.rejectionRate}%`} icon={XCircle} color="rose" />
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
