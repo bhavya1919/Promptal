@@ -28,7 +28,7 @@ export default function InterviewsPage() {
 
 function InterviewsPageContent() {
     const [applications, setApplications] = useState<Application[]>([]);
-    const [interviewStates, setInterviewStates] = useState<Record<string, { date: string; time: string; link: string }>>({});
+    const [interviewStates, setInterviewStates] = useState<Record<string, { date: string; time: string; link: string; platform: string }>>({});
 
     useEffect(() => {
         fetchShortlistedCandidates();
@@ -60,10 +60,11 @@ function InterviewsPageContent() {
     };
 
     const scheduleInterview = async (applicationId: string) => {
-        const appState = interviewStates[applicationId] || { date: "", time: "", link: "" };
+        const appState = interviewStates[applicationId] || { date: "", time: "", link: "", platform: "Google Meet" };
         const dateVal = appState.date;
         const timeVal = appState.time;
         const linkVal = appState.link;
+        const platformVal = appState.platform || "Google Meet";
 
         if (!dateVal || !timeVal || !linkVal) {
             toast.error("Please fill in the Date, Time, and Google Meet Link for this candidate.");
@@ -78,6 +79,7 @@ function InterviewsPageContent() {
                     interview_date: dateVal,
                     interview_time: timeVal,
                     meeting_link: linkVal,
+                    platform: platformVal,
                     status: "Scheduled",
                 },
             ]);
@@ -127,6 +129,7 @@ function InterviewsPageContent() {
                                         <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
                                         <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Date</th>
                                         <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Time</th>
+                                        <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Platform</th>
                                         <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Meet Link</th>
                                         <th className="p-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Action</th>
                                     </tr>
@@ -151,7 +154,7 @@ function InterviewsPageContent() {
                                                         setInterviewStates({
                                                             ...interviewStates,
                                                             [app.id]: {
-                                                                ...(interviewStates[app.id] || { date: "", time: "", link: "" }),
+                                                                ...(interviewStates[app.id] || { date: "", time: "", link: "", platform: "Google Meet" }),
                                                                 date: e.target.value,
                                                             },
                                                         })
@@ -169,7 +172,7 @@ function InterviewsPageContent() {
                                                         setInterviewStates({
                                                             ...interviewStates,
                                                             [app.id]: {
-                                                                ...(interviewStates[app.id] || { date: "", time: "", link: "" }),
+                                                                ...(interviewStates[app.id] || { date: "", time: "", link: "", platform: "Google Meet" }),
                                                                 time: e.target.value,
                                                             },
                                                         })
@@ -180,15 +183,36 @@ function InterviewsPageContent() {
                                             </td>
 
                                             <td className="p-4">
+                                                <select
+                                                    value={interviewStates[app.id]?.platform || "Google Meet"}
+                                                    onChange={(e) =>
+                                                        setInterviewStates({
+                                                            ...interviewStates,
+                                                            [app.id]: {
+                                                                ...(interviewStates[app.id] || { date: "", time: "", link: "", platform: "Google Meet" }),
+                                                                platform: e.target.value,
+                                                            },
+                                                        })
+                                                    }
+                                                    aria-label={`Interview platform for ${app.candidate_name}`}
+                                                    className="border border-slate-200 p-2 rounded-xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none text-xs w-full max-w-[130px] bg-white"
+                                                >
+                                                    <option value="Google Meet">Google Meet</option>
+                                                    <option value="Zoom">Zoom</option>
+                                                    <option value="Microsoft Teams">Microsoft Teams</option>
+                                                </select>
+                                            </td>
+
+                                            <td className="p-4">
                                                 <input
                                                     type="text"
-                                                    placeholder="Google Meet Link"
+                                                    placeholder="Meeting Link"
                                                     value={interviewStates[app.id]?.link || ""}
                                                     onChange={(e) =>
                                                         setInterviewStates({
                                                             ...interviewStates,
                                                             [app.id]: {
-                                                                ...(interviewStates[app.id] || { date: "", time: "", link: "" }),
+                                                                ...(interviewStates[app.id] || { date: "", time: "", link: "", platform: "Google Meet" }),
                                                                 link: e.target.value,
                                                             },
                                                         })
