@@ -43,6 +43,11 @@ function ApplicationsPageContent() {
     const [csvFile, setCsvFile] = useState<File | null>(null);
     const [csvData, setCsvData] = useState<any[]>([]);
 
+    const [referenceName, setReferenceName] = useState("");
+    const [referenceCompany, setReferenceCompany] = useState("");
+    const [referenceEmail, setReferenceEmail] = useState("");
+    const [referencePhone, setReferencePhone] = useState("");
+
     useEffect(() => {
         fetchApplications();
     }, []);
@@ -299,6 +304,30 @@ function ApplicationsPageContent() {
 
         setCsvData([]);
         setCsvFile(null);
+    };
+
+    const addReferenceCheck = async (applicationId: string) => {
+        const { error } = await supabase
+            .from("reference_checks")
+            .insert({
+                application_id: applicationId,
+                reference_name: referenceName,
+                company: referenceCompany,
+                email: referenceEmail,
+                phone: referencePhone,
+            });
+
+        if (error) {
+            toast.error(error.message);
+            return;
+        }
+
+        toast.success("Reference added");
+
+        setReferenceName("");
+        setReferenceCompany("");
+        setReferenceEmail("");
+        setReferencePhone("");
     };
 
     return (<DashboardLayout><div className="p-8"> <div className="max-w-7xl mx-auto">
@@ -653,6 +682,42 @@ function ApplicationsPageContent() {
                         <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Experience</p>
                         <p className="text-sm text-slate-700 whitespace-pre-wrap">{selectedApp.experience || <span className="text-slate-400 italic">Not specified</span>}</p>
                     </div>
+                </div>
+
+                <div className="px-6 pb-6 border-t border-slate-100 pt-6">
+                    <h3 className="text-lg font-bold text-slate-800 mb-4">Reference Check</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <input
+                            className="w-full border border-slate-300 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-sm transition-all"
+                            placeholder="Reference Name"
+                            value={referenceName}
+                            onChange={(e) => setReferenceName(e.target.value)}
+                        />
+                        <input
+                            className="w-full border border-slate-300 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-sm transition-all"
+                            placeholder="Company"
+                            value={referenceCompany}
+                            onChange={(e) => setReferenceCompany(e.target.value)}
+                        />
+                        <input
+                            className="w-full border border-slate-300 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-sm transition-all"
+                            placeholder="Email"
+                            value={referenceEmail}
+                            onChange={(e) => setReferenceEmail(e.target.value)}
+                        />
+                        <input
+                            className="w-full border border-slate-300 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-sm transition-all"
+                            placeholder="Phone"
+                            value={referencePhone}
+                            onChange={(e) => setReferencePhone(e.target.value)}
+                        />
+                    </div>
+                    <button
+                        onClick={() => addReferenceCheck(selectedApp.id)}
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg text-sm font-semibold shadow hover:shadow-md transition-all w-full md:w-auto"
+                    >
+                        Add Reference
+                    </button>
                 </div>
 
                 <div className="bg-slate-50 border-t border-slate-100 p-6 flex justify-between items-center shrink-0">
