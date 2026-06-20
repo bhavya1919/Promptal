@@ -61,6 +61,7 @@ export default function RecruiterDashboard() {
 function RecruiterDashboardContent() {
     // Existing State
     const [applications, setApplications] = useState<ApplicationData[]>([]);
+    const [selectedTemplate, setSelectedTemplate] = useState("corporate");
     
     // New Dashboard State
     const [loading, setLoading] = useState(true);
@@ -258,12 +259,14 @@ function RecruiterDashboardContent() {
     const handleGenerateOffer = (
         candidateName: string,
         jobTitle: string,
-        companyName: string
+        companyName: string,
+        template: string = "corporate"
     ) => {
         generateOfferLetter(
             candidateName,
             jobTitle,
-            companyName
+            companyName,
+            template
         );
     };
 
@@ -530,22 +533,35 @@ function RecruiterDashboardContent() {
                                                             <div className="flex gap-2">
                                                                 <button
                                                                     onClick={() => shortlistCandidate(app.id, app.candidate_name, app.candidate_email)}
-                                                                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-emerald-600/10 cursor-pointer"
+                                                                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-emerald-600/10 cursor-pointer h-fit"
                                                                 >
                                                                     Shortlist
                                                                 </button>
-                                                                <button
-                                                                    onClick={() =>
-                                                                        handleGenerateOffer(
-                                                                            app.candidate_name,
-                                                                            app.job_title,
-                                                                            "Promtal Jobs"
-                                                                        )
-                                                                    }
-                                                                    className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-purple-600/10 cursor-pointer"
-                                                                >
-                                                                    Generate Offer
-                                                                </button>
+                                                                
+                                                                <div className="flex flex-col gap-1">
+                                                                    <select
+                                                                        value={selectedTemplate}
+                                                                        onChange={(e) => setSelectedTemplate(e.target.value)}
+                                                                        className="text-xs border border-slate-200 rounded px-2 py-1 text-slate-600 outline-none focus:border-purple-400 bg-white"
+                                                                    >
+                                                                        <option value="corporate">Corporate</option>
+                                                                        <option value="modern">Modern</option>
+                                                                        <option value="minimal">Minimal</option>
+                                                                    </select>
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            handleGenerateOffer(
+                                                                                app.candidate_name,
+                                                                                app.job_title,
+                                                                                "Promtal Jobs",
+                                                                                selectedTemplate
+                                                                            )
+                                                                        }
+                                                                        className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs py-1.5 px-3.5 rounded-xl transition-all shadow-sm hover:shadow shadow-purple-600/10 cursor-pointer"
+                                                                    >
+                                                                        Generate Offer
+                                                                    </button>
+                                                                </div>
                                                                 <button
                                                                     onClick={() =>
                                                                         handleGenerateExperienceLetter(

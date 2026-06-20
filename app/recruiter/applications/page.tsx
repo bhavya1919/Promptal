@@ -38,6 +38,7 @@ function ApplicationsPageContent() {
     const [applications, setApplications] = useState<ApplicationData[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedApp, setSelectedApp] = useState<ApplicationData | null>(null);
+    const [selectedTemplate, setSelectedTemplate] = useState("corporate");
 
     useEffect(() => {
         fetchApplications();
@@ -182,12 +183,14 @@ function ApplicationsPageContent() {
     const handleGenerateOffer = (
         candidateName: string,
         jobTitle: string,
-        companyName: string
+        companyName: string,
+        template: string = "corporate"
     ) => {
         generateOfferLetter(
             candidateName,
             jobTitle,
-            companyName
+            companyName,
+            template
         );
     };
 
@@ -394,31 +397,43 @@ function ApplicationsPageContent() {
                                                     On Hold
                                                 </button>
                                             </div>
-                                            <div className="flex gap-2">
-                                                <button
-                                                    onClick={() =>
-                                                        handleGenerateOffer(
-                                                            app.candidate_name,
-                                                            app.job_title,
-                                                            "Promtal Jobs"
-                                                        )
-                                                    }
-                                                    className="bg-purple-600 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                            <div className="flex flex-col gap-1">
+                                                <select
+                                                    value={selectedTemplate}
+                                                    onChange={(e) => setSelectedTemplate(e.target.value)}
+                                                    className="text-xs border border-slate-200 rounded px-2 py-1 text-slate-600 outline-none focus:border-purple-400 bg-white"
                                                 >
-                                                    Generate Offer
-                                                </button>
-                                                <button
-                                                    onClick={() =>
-                                                        handleGenerateExperienceLetter(
-                                                            app.candidate_name,
-                                                            app.job_title,
-                                                            "Promtal Jobs"
-                                                        )
-                                                    }
-                                                    className="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
-                                                >
-                                                    Experience Letter
-                                                </button>
+                                                    <option value="corporate">Corporate</option>
+                                                    <option value="modern">Modern</option>
+                                                    <option value="minimal">Minimal</option>
+                                                </select>
+                                                <div className="flex gap-2">
+                                                    <button
+                                                        onClick={() =>
+                                                            handleGenerateOffer(
+                                                                app.candidate_name,
+                                                                app.job_title,
+                                                                "Promtal Jobs",
+                                                                selectedTemplate
+                                                            )
+                                                        }
+                                                        className="bg-purple-600 hover:bg-purple-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                                    >
+                                                        Generate Offer
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            handleGenerateExperienceLetter(
+                                                                app.candidate_name,
+                                                                app.job_title,
+                                                                "Promtal Jobs"
+                                                            )
+                                                        }
+                                                        className="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow transition-all cursor-pointer animate-duration-200"
+                                                    >
+                                                        Experience Letter
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     )}
