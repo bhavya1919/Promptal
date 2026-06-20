@@ -40,6 +40,8 @@ function ApplicationsPageContent() {
     const [loading, setLoading] = useState(true);
     const [selectedApp, setSelectedApp] = useState<ApplicationData | null>(null);
     const [selectedTemplate, setSelectedTemplate] = useState("corporate");
+    const [csvFile, setCsvFile] = useState<File | null>(null);
+    const [csvData, setCsvData] = useState<any[]>([]);
 
     useEffect(() => {
         fetchApplications();
@@ -242,17 +244,122 @@ function ApplicationsPageContent() {
         document.body.removeChild(link);
     };
 
+    const parseCSV = () => {
+        if (!csvFile) return;
+
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            const text = event.target?.result as string;
+            const rows = text.split("\n");
+            const headers = rows[0].split(",").map((h) => h.trim());
+
+            const data = rows
+                .slice(1)
+                .filter((row) => row.trim())
+                .map((row) => {
+                    const values = row.split(",");
+                    return headers.reduce((obj: any, header, index) => {
+                        obj[header] = values[index]?.trim() || "";
+                        return obj;
+                    }, {});
+                });
+
+            setCsvData(data);
+        };
+
+        reader.readAsText(csvFile);
+    };
+
+    const importCSV = async () => {
+        if (csvData.length === 0) {
+            toast.error("Preview CSV first");
+            return;
+        }
+
+        const candidatesToInsert = csvData.map((candidate) => ({
+            name: candidate.name,
+            email: candidate.email,
+            skills: candidate.skills,
+            education: candidate.education,
+            experience: candidate.experience,
+        }));
+
+        const { error } = await supabase
+            .from("bulk_candidates")
+            .insert(candidatesToInsert);
+
+        if (error) {
+            console.error(error);
+            toast.error(error.message);
+            return;
+        }
+
+        toast.success(`${candidatesToInsert.length} candidates imported successfully`);
+
+        setCsvData([]);
+        setCsvFile(null);
+    };
+
     return (<DashboardLayout><div className="p-8"> <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold">
                 Applications Management
             </h1>
-            <button 
-                onClick={exportToCSV}
-                className="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow transition-colors"
-            >
-                Export CSV
-            </button>
+            <div className="flex flex-col items-end">
+                <div className="flex gap-3">
+                    <label className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow transition-colors cursor-pointer flex items-center justify-center">
+                        Import CSV
+                        <input
+                            type="file"
+                            accept=".csv"
+                            className="hidden"
+                            onChange={(e) => {
+                                if (e.target.files?.[0]) {
+                                    setCsvFile(e.target.files[0]);
+                                }
+                            }}
+                        />
+                    </label>
+                    <button 
+                        onClick={exportToCSV}
+                        className="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow transition-colors"
+                    >
+                        Export CSV
+                    </button>
+                </div>
+                {csvFile && (
+                    <div className="flex flex-col items-end">
+                        <p className="text-sm text-emerald-600 mt-2 font-medium">
+                            Selected: {csvFile.name}
+                        </p>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={parseCSV}
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg mt-2 text-sm font-semibold shadow transition-colors"
+                            >
+                                Preview CSV
+                            </button>
+                            <button
+                                onClick={importCSV}
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg mt-2 text-sm font-semibold shadow transition-colors"
+                            >
+                                Import Candidates
+                            </button>
+                        </div>
+                    </div>
+                )}
+                {csvData.length > 0 && (
+                    <div className="mt-4 text-left w-full max-w-sm">
+                        <h3 className="font-semibold text-slate-800 mb-2">
+                            CSV Preview
+                        </h3>
+                        <pre className="bg-slate-100 p-4 rounded-xl text-xs text-slate-700 overflow-x-auto border border-slate-200">
+                            {JSON.stringify(csvData.slice(0, 5), null, 2)}
+                        </pre>
+                    </div>
+                )}
+            </div>
         </div>
 
         {loading ? (
