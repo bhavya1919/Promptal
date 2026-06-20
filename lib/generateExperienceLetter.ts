@@ -1,11 +1,11 @@
-import { jsPDF } from "jspdf";
-
-export const generateExperienceLetter = (
+export const generateExperienceLetter = async (
     candidateName: string,
     jobTitle: string,
     companyName: string
 ) => {
-    const doc = new jsPDF();
+    try {
+        const { jsPDF } = await import("jspdf");
+        const doc = new jsPDF();
 
     const today = new Date().toLocaleDateString();
 
@@ -89,4 +89,8 @@ export const generateExperienceLetter = (
     doc.save(
         `Experience_Letter_${candidateName}.pdf`
     );
+    } catch (e: any) {
+        console.error(e);
+        alert(e.message);
+    }
 };

@@ -1,11 +1,11 @@
-import { jsPDF } from "jspdf";
-
-export const generateOfferLetter = (
+export const generateOfferLetter = async (
     candidateName: string,
     jobTitle: string,
     companyName: string
 ) => {
-    const doc = new jsPDF();
+    try {
+        const { jsPDF } = await import("jspdf");
+        const doc = new jsPDF();
 
     const today = new Date().toLocaleDateString();
 
@@ -108,7 +108,9 @@ export const generateOfferLetter = (
         265
     );
 
-    doc.save(
-        `Offer_Letter_${candidateName}.pdf`
-    );
+        doc.save(`Offer_Letter_${candidateName}.pdf`);
+    } catch (error: any) {
+        console.error("PDF Generation Error:", error);
+        alert("Error generating PDF: " + error.message);
+    }
 };

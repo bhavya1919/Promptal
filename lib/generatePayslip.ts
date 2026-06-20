@@ -1,10 +1,10 @@
-import { jsPDF } from "jspdf";
-
-export const generatePayslip = (
+export const generatePayslip = async (
   employeeName: string,
   designation: string
 ) => {
-  const doc = new jsPDF();
+  try {
+    const { jsPDF } = await import("jspdf");
+    const doc = new jsPDF();
 
   const basicSalary = 25000;
   const hra = 5000;
@@ -94,4 +94,8 @@ export const generatePayslip = (
   doc.save(
     `Payslip_${employeeName}.pdf`
   );
+  } catch (e: any) {
+    console.error(e);
+    alert(e.message);
+  }
 };
