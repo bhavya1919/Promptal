@@ -33,6 +33,7 @@ function CandidateDashboardContent() {
     const [education, setEducation] = useState("");
     const [experience, setExperience] = useState("");
     const [resumeUrl, setResumeUrl] = useState("");
+    const [resumeFile, setResumeFile] = useState<File | null>(null);
 
     // New states
     const [loading, setLoading] = useState(true);
@@ -120,6 +121,29 @@ function CandidateDashboardContent() {
         setLoading(false);
     };
 
+    const uploadResume = async () => {
+        if (!resumeFile) return null;
+
+        const fileName = `${Date.now()}-${resumeFile.name}`;
+
+        const { error } = await supabase.storage
+            .from("resumes")
+            .upload(fileName, resumeFile);
+
+        if (error) {
+            console.error(error);
+            return null;
+        }
+
+        const {
+            data: { publicUrl },
+        } = supabase.storage
+            .from("resumes")
+            .getPublicUrl(fileName);
+
+        return publicUrl;
+    };
+
     const handleSaveProfile = async () => {
         const { data: { user } } = await supabase.auth.getUser();
 
@@ -127,6 +151,9 @@ function CandidateDashboardContent() {
             toast.error("Please login first");
             return;
         }
+
+        const uploadedResumeUrl = await uploadResume();
+        const finalResumeUrl = uploadedResumeUrl || resumeUrl;
 
         let error;
         if (candidateProfile) {
@@ -138,7 +165,7 @@ function CandidateDashboardContent() {
                     skills,
                     education,
                     experience,
-                    resume_url: resumeUrl,
+                    resume_url: finalResumeUrl,
                 })
                 .eq("id", candidateProfile.id);
             error = updateError;
@@ -153,7 +180,7 @@ function CandidateDashboardContent() {
                         skills,
                         education,
                         experience,
-                        resume_url: resumeUrl,
+                        resume_url: finalResumeUrl,
                     },
                 ]);
             error = insertError;
@@ -337,14 +364,20 @@ function CandidateDashboardContent() {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-2">Resume URL</label>
+                                        <label className="block text-sm font-medium text-slate-700 mb-2">Upload Resume (PDF)</label>
                                         <input
-                                            type="text"
-                                            value={resumeUrl}
-                                            onChange={(e) => setResumeUrl(e.target.value)}
-                                            className="w-full border border-slate-300 p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
-                                            placeholder="https://linkedin.com/in/johndoe"
+                                            type="file"
+                                            accept=".pdf"
+                                            onChange={(e) =>
+                                                setResumeFile(e.target.files?.[0] || null)
+                                            }
+                                            className="w-full border border-slate-300 p-2.5 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
                                         />
+                                        {resumeFile && (
+                                            <p className="text-sm text-emerald-600 mt-2 font-medium">
+                                                Selected: {resumeFile.name}
+                                            </p>
+                                        )}
                                     </div>
                                     <div>
                                         <button
