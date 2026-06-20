@@ -44,6 +44,7 @@ function CandidateDashboardContent() {
     
     const [isEditing, setIsEditing] = useState(false);
     const [selectedOffer, setSelectedOffer] = useState<any>(null);
+    const [parsing, setParsing] = useState(false);
 
     useEffect(() => {
         fetchDashboardData();
@@ -142,6 +143,62 @@ function CandidateDashboardContent() {
             .getPublicUrl(fileName);
 
         return publicUrl;
+    };
+
+    const parseResume = async () => {
+        if (!resumeFile) {
+            toast.error("Upload a PDF first");
+            return;
+        }
+
+        try {
+            setParsing(true);
+
+            const pdfjsLib = await import("pdfjs-dist");
+            await import("pdfjs-dist/build/pdf.worker.min.mjs");
+
+            const fileBuffer = await resumeFile.arrayBuffer();
+
+            const pdf = await pdfjsLib.getDocument({
+                data: fileBuffer,
+            }).promise;
+
+            let text = "";
+
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const content = await page.getTextContent();
+
+                text += content.items
+                    .map((item: any) => item.str)
+                    .join(" ");
+            }
+
+            console.log("Resume Text:", text);
+
+            const skillsMatch = text.match(/skills[:\-](.*?)(education|experience|$)/i);
+            const educationMatch = text.match(/education[:\-](.*?)(experience|skills|$)/i);
+            const experienceMatch = text.match(/experience[:\-](.*?)(education|skills|$)/i);
+
+            if (skillsMatch) {
+                setSkills(skillsMatch[1].trim());
+            }
+
+            if (educationMatch) {
+                setEducation(educationMatch[1].trim());
+            }
+
+            if (experienceMatch) {
+                setExperience(experienceMatch[1].trim());
+            }
+
+            toast.success("Resume parsed successfully");
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to parse resume");
+        } finally {
+            setParsing(false);
+        }
     };
 
     const handleSaveProfile = async () => {
@@ -385,6 +442,19 @@ function CandidateDashboardContent() {
                                                 Selected: {resumeFile.name}
                                             </p>
                                         )}
+                                        {resumeUrl && !resumeFile && (
+                                            <p className="text-sm text-slate-500 mt-2">
+                                                Current resume on file
+                                            </p>
+                                        )}
+                                        <button
+                                            type="button"
+                                            onClick={parseResume}
+                                            disabled={parsing || !resumeFile}
+                                            className="bg-purple-600 text-white px-4 py-2 rounded-lg mt-3 text-sm font-semibold shadow hover:bg-purple-700 disabled:opacity-50 transition-all"
+                                        >
+                                            {parsing ? "Parsing..." : "Parse Resume"}
+                                        </button>
                                     </div>
                                     <div>
                                         <button
