@@ -147,6 +147,8 @@ function ApplicationsPageContent() {
             });
         }
 
+        results.sort((a, b) => b.ai_score - a.ai_score);
+
         setApplications(results);
         setLoading(false);
 
@@ -453,7 +455,11 @@ function ApplicationsPageContent() {
                         {applications.map((app) => (
                             <tr
                                 key={app.id}
-                                className="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50/70 dark:hover:bg-slate-700/50 transition-colors"
+                                className={`border-b border-slate-100 dark:border-slate-700 transition-colors ${
+                                    app.ai_score >= 90
+                                        ? "bg-green-50/80 dark:bg-green-900/20 hover:bg-green-100/50 dark:hover:bg-green-900/40"
+                                        : "hover:bg-slate-50/70 dark:hover:bg-slate-700/50"
+                                }`}
                             >
                                 <td className="p-4">
                                     <div className="font-semibold text-slate-800 dark:text-slate-50">
@@ -488,9 +494,16 @@ function ApplicationsPageContent() {
                                 </td>
 
                                 <td className="p-4">
-                                    <span className="font-bold text-emerald-600 dark:text-green-400">
-                                        {app.ai_score}%
-                                    </span>
+                                    <div className="flex flex-col gap-1">
+                                        <span className="font-bold text-emerald-600 dark:text-green-400">
+                                            {app.ai_score}%
+                                        </span>
+                                        <span className="text-xs font-medium text-slate-600 dark:text-slate-300 whitespace-nowrap">
+                                            {app.ai_score >= 80 && "🏆 Excellent Match"}
+                                            {app.ai_score >= 60 && app.ai_score < 80 && "✅ Good Match"}
+                                            {app.ai_score < 60 && "⚠️ Low Match"}
+                                        </span>
+                                    </div>
                                 </td>
 
                                 <td className="p-4">
@@ -652,7 +665,14 @@ function ApplicationsPageContent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
                             <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">AI Match Score</p>
-                            <p className="text-2xl font-bold text-emerald-600 dark:text-green-400">{selectedApp.ai_score}%</p>
+                            <div className="flex items-center gap-2">
+                                <p className="text-2xl font-bold text-emerald-600 dark:text-green-400">{selectedApp.ai_score}%</p>
+                                <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
+                                    {selectedApp.ai_score >= 80 && "🏆 Excellent Match"}
+                                    {selectedApp.ai_score >= 60 && selectedApp.ai_score < 80 && "✅ Good Match"}
+                                    {selectedApp.ai_score < 60 && "⚠️ Low Match"}
+                                </span>
+                            </div>
                         </div>
                         <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
                             <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Application Status</p>
